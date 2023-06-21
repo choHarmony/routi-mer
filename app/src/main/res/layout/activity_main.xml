@@ -41,4 +41,21 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
+    <Spinner
+        android:id="@+id/spinner_groupSelect"
+        android:background="@drawable/spinner_bg"
+        android:popupBackground="@drawable/spinner_dropdown_bg"
+        android:dropDownVerticalOffset="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:paddingStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

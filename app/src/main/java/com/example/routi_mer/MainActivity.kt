@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import com.example.routi_mer.databinding.ActivityMainBinding
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnSettings.setOnClickListener {
             Toast.makeText(this, "setting btn is clicked", Toast.LENGTH_SHORT).show()
         }
-        //setSpinner() // spinner adapter, selected 요소 관리
+        setSpinner() // spinner adapter, selected 요소 관리
 
 
     }
@@ -32,24 +33,24 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.setDisplayShowTitleEnabled(false) // toolbar title 제거
     }
 
-//    private fun setSpinner() {
-//        // spinner
-//        var spinnerGroupData = resources.getStringArray(R.array.routine_group)
-//        var spinnerAdapter = ArrayAdapter<String>(this, R.layout.spinner_open, spinnerGroupData)
-//        binding.spinnerGroupSelect.adapter = spinnerAdapter
-//
-//        binding.spinnerGroupSelect.setSelection(0)
-//        binding.spinnerGroupSelect.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//                Toast.makeText(this@MainActivity, "${spinnerGroupData[binding.spinnerGroupSelect.selectedItemPosition]} selected", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun onNothingSelected(p0: AdapterView<*>?) {
-//
-//            }
-//
-//        }
-//    }
+    private fun setSpinner() {
+        // spinner
+        var spinnerGroupData = resources.getStringArray(R.array.routine_group)
+        var spinnerAdapter = ArrayAdapter<String>(this, R.layout.spinner_open, spinnerGroupData)
+        binding.spinnerGroupSelect.adapter = spinnerAdapter
+
+        binding.spinnerGroupSelect.setSelection(0)
+        binding.spinnerGroupSelect.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                Toast.makeText(this@MainActivity, "${spinnerGroupData[binding.spinnerGroupSelect.selectedItemPosition]} selected", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+
+        }
+    }
 
 
 
