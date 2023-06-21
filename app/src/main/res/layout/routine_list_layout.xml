@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="140dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardBackgroundColor="@color/green3"
+    app:cardCornerRadius="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginBottom="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/routine_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquare_extrabold"
+            android:text="최대 25자 작성 가능한 루틴 제목"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:maxLength="25"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/routine_description"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:text="최대 40자 작성 가능한 루틴 설명"
+            android:textSize="15sp"
+            android:fontFamily="@font/nanumsquare_bold"
+            android:gravity="center|start"
+            android:maxLines="2"
+            android:maxLength="40"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/btn_start"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_round"
+            android:text="시작"
+            android:textSize="17sp"
+            android:textColor="@color/yellow"
+            android:fontFamily="@font/nanumsquare_extrabold"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
