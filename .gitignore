@@ -14,3 +14,5 @@
 .cxx
 local.properties
 font/
+*.png
+!icon_routimer_logo.png

@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
-import androidx.lifecycle.ViewModel
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.routi_mer.databinding.RoutineListLayoutBinding
 
 class RoutineListAdapter(private val routineList: ArrayList<RoutineListData>) :
     RecyclerView.Adapter<RoutineListAdapter.ViewHolder>() {
@@ -16,6 +16,19 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineListData>) :
         public var routineTitle: TextView = itemView.findViewById(R.id.routine_title)
         public var routineDescription: TextView = itemView.findViewById(R.id.routine_description)
         public var startBtn: Button = itemView.findViewById(R.id.btn_start)
+        private var menuBtn: ImageButton = itemView.findViewById(R.id.btn_menu)
+
+
+        private val bottomSheetFragment = BottomSheetFragment(itemView.context)
+
+        init {
+            menuBtn.setOnClickListener {
+                val fManager = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+                bottomSheetFragment.show(fManager, bottomSheetFragment.tag)
+            }
+        }
+
+
     }
 
 
