@@ -1,6 +1,6 @@
 package com.example.routi_mer
 
 data class RoutineListData(
-    val routineTitle: String,
-    val routineDescription: String
+    var routineTitle: String = "",
+    var routineDescription: String = ""
 )

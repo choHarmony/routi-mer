@@ -16,9 +16,11 @@ import com.example.routi_mer.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
+    private var routineList = ArrayList<RoutineListData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,17 +33,24 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "setting btn is clicked", Toast.LENGTH_SHORT).show()
         }
 
-        viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        viewAdapter = RoutineListAdapter()
-        recyclerView = binding.routineList.apply {
-            setHasFixedSize(true)
-            layoutManager = viewManager
-            adapter = viewAdapter
+        setRoutineRecyclerview()
+        // 루틴 리스트 더미데이터 추가
+        routineList.apply {
+            add(RoutineListData("거북목 스트레칭", "개쩌는 효과!"))
+            add(RoutineListData("너무 덥다", "에어컨 각"))
+            add(RoutineListData("외로운 날들이여", "모두 다 안녕~"))
+            add(RoutineListData("거북목 스트레칭", "개쩌는 효과!"))
         }
 
 
 
     }
+
+
+
+
+
+
 
     private fun setToolbar() {
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -49,6 +58,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false) // toolbar title 제거
     }
+
 
     private fun setSpinner() {
         // spinner
@@ -69,6 +79,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun setRoutineRecyclerview() {
+        viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        viewAdapter = RoutineListAdapter(routineList)
+        recyclerView = binding.routineList.apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+    }
 
 
 
