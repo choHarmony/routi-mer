@@ -60,7 +60,7 @@
             android:id="@+id/btn_start"
             android:layout_width="80dp"
             android:layout_height="50dp"
-            android:background="@drawable/btn_round"
+            android:background="@drawable/btn_start_round"
             android:text="시작"
             android:textSize="17sp"
             android:textColor="@color/yellow"

@@ -33,7 +33,7 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineListData>) :
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val cardView = LayoutInflater.from(parent.context).inflate(R.layout.routine_list_layout, parent, false)
+        val cardView = LayoutInflater.from(parent.context).inflate(R.layout.layout_routine_list, parent, false)
 
         return ViewHolder(cardView)
     }
