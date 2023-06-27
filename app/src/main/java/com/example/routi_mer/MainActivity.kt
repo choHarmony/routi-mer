@@ -1,6 +1,7 @@
 package com.example.routi_mer
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -42,9 +43,20 @@ class MainActivity : AppCompatActivity() {
             add(RoutineListData("거북목 스트레칭", "개쩌는 효과!"))
         }
 
+        binding.addRoutine.setOnClickListener {
+            val intent = Intent(this, AddRoutineActivity::class.java)
+            startActivity(intent)
+        }
+
 
 
     }
+
+
+    // 루틴 추가하고 다시 돌아왔을 때 recyclerview 갱신하기
+//    override fun onRestart() {
+//        super.onRestart()
+//    }
 
 
 
