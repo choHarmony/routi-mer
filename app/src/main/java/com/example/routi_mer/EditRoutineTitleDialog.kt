@@ -45,8 +45,13 @@ class EditRoutineTitleDialog(private val context: AppCompatActivity) {
 
 
         binding.btnEditComplete.setOnClickListener {
-            onClickListener.onClicked(binding.editTitle.text.toString(), binding.editDes.text.toString())
-            dlg.dismiss()
+            if (binding.editTitle.text.isEmpty()) {
+                Toast.makeText(context, "루틴 이름은 필수 입력사항입니다.", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                onClickListener.onClicked(binding.editTitle.text.toString(), binding.editDes.text.toString())
+                dlg.dismiss()
+            }
         }
 
         binding.btnEditQuit.setOnClickListener {
