@@ -60,6 +60,37 @@
         app:layout_constraintStart_toEndOf="@id/text_des"
         app:layout_constraintTop_toTopOf="@+id/text_des" />
 
+    <TextView
+        android:id="@+id/text_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="그룹 설정"
+        android:textSize="17sp"
+        android:textColor="@color/selectedGrey"
+        android:fontFamily="@font/nanumsquare_bold"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_des" />
+
+    <Button
+        android:id="@+id/btn_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="전체"
+        android:textSize="17sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/icon_arrow_down_size_edit"
+        android:layout_marginStart="15dp"
+        android:gravity="center|start"
+        android:drawablePadding="5dp"
+        app:layout_constraintTop_toTopOf="@+id/text_group"
+        app:layout_constraintBottom_toBottomOf="@+id/text_group"
+        app:layout_constraintStart_toEndOf="@+id/text_group" />
+
+
     <Button
         android:id="@+id/btn_edit_complete"
         android:layout_width="100dp"
@@ -71,7 +102,7 @@
         android:background="@drawable/btn_dialog_round"
         android:layout_marginTop="30dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_des"
+        app:layout_constraintTop_toBottomOf="@+id/text_group"
         app:layout_constraintEnd_toStartOf="@+id/btn_edit_quit"/>
 
     <Button
@@ -85,7 +116,7 @@
         android:background="@drawable/btn_dialog_round"
         android:layout_marginTop="30dp"
         app:layout_constraintStart_toEndOf="@+id/btn_edit_complete"
-        app:layout_constraintTop_toBottomOf="@+id/text_des"
+        app:layout_constraintTop_toBottomOf="@+id/text_group"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView

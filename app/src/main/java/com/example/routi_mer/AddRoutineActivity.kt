@@ -4,6 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routi_mer.databinding.ActivityAddRoutineBinding
@@ -20,6 +23,8 @@ class AddRoutineActivity : AppCompatActivity() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var timerList = ArrayList<TimerListData>()
+
+    private val addTimerBTSFragment = AddTimerBottomSheetFragment(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +44,11 @@ class AddRoutineActivity : AppCompatActivity() {
         timerList.apply {
             add(TimerListData("목 옆으로 당기기", "목을 옆으로 당기면 된다", "20", "3"))
         }
+
+        binding.addTimer.setOnClickListener {
+            addTimerBTSFragment.show(supportFragmentManager, addTimerBTSFragment.tag)
+        }
+
     }
 
 
@@ -66,6 +76,8 @@ class AddRoutineActivity : AppCompatActivity() {
 
         })
     }
+
+
 
 
 
