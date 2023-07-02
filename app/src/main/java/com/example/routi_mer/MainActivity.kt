@@ -1,14 +1,11 @@
 package com.example.routi_mer
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.HorizontalScrollView
-import android.widget.LinearLayout.HORIZONTAL
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnGroupManage.setOnClickListener {
             val adapter = GroupListAdapter()
-            val bottomDialogFragment = AddGroupDialogFragment(adapter)
+            val bottomDialogFragment = AddGroupBottomSheetFragment(adapter)
             adapter.setItem(groupList)
             bottomDialogFragment.show(supportFragmentManager, "TAG")
         }

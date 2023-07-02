@@ -10,10 +10,15 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 
-class GroupListAdapter() :
+class GroupListAdapter(var groupList: MutableList<GroupListData> = ArrayList()) :
     RecyclerView.Adapter<GroupListAdapter.Holder>() {
 
-    private var groupList: MutableList<GroupListData> = ArrayList()
+    //private var groupList: MutableList<GroupListData> = ArrayList()
+
+    fun addItem(data: GroupListData) {
+        groupList.add(data)
+        notifyDataSetChanged()
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
@@ -40,10 +45,24 @@ class GroupListAdapter() :
         }
 
         holder.view.findViewById<Button>(R.id.btn_group_delete).setOnClickListener {
-            // roomdb에서도 삭제시키는 코드 추가하는 거 잊지 말기~!
-            groupList.remove(groupList[position])
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, groupList.size)
+            val builder = AlertDialog.Builder(holder.view.context, R.style.CustomDialogTheme)
+            builder.setTitle("삭제 확인")
+            builder.setMessage("정말 삭제하시겠습니까?")
+            builder.setCancelable(false)
+
+            builder.setPositiveButton("확인") { dialog, which ->
+                // roomdb에서도 삭제시키는 코드 추가하는 거 잊지 말기~!
+                groupList.remove(groupList[position])
+                notifyItemRemoved(position)
+                notifyItemRangeChanged(position, groupList.size)
+            }
+
+            builder.setNegativeButton("취소") { dialog, which ->
+
+            }
+
+            builder.show()
+
         }
     }
 
