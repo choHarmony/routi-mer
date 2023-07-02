@@ -38,7 +38,7 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineListData>) :
         return ViewHolder(cardView)
     }
 
-    // 뷰와 데이터의 결합이 이루어지는 장소. 여기서 for문을 통해 data list에 있는 애들을 불러오면 될 것 같음
+    // 뷰와 데이터의 결합이 이루어지는 장소
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.routineTitle.text = routineList[position].routineTitle
         holder.routineDescription.text = routineList[position].routineDescription

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/timerbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bottom_sheet_dialog_bar"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/text_group_manage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="그룹 관리"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/nanumsquare_bold"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timerbar" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/group_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/text_group_manage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:overScrollMode="never" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="그룹 추가"
+        android:textSize="18sp"
+        android:textColor="@color/selectedGrey"
+        android:fontFamily="@font/nanumsquare_bold"
+        android:gravity="start|center"
+        android:paddingStart="20dp"
+        android:drawablePadding="10dp"
+        android:background="?attr/selectableItemBackground"
+        android:drawableStart="@drawable/icon_group_size_edit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_list" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,17 @@
 package com.example.routi_mer
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.LayoutInflater
+import android.view.View
 import android.view.Window
+import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.example.routi_mer.databinding.ActivityAddRoutineBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding
 
@@ -49,6 +53,7 @@ class EditRoutineTitleDialog(private val context: AppCompatActivity) {
             val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
             builder.setTitle("그룹 선택")
             builder.setCancelable(false)
+            builder.setIcon(R.drawable.icon_group_size_edit)
             val groupList = context.resources.getStringArray(R.array.routine_group)
 
             builder.setSingleChoiceItems(groupList, checkedIdx) { dialog, which ->

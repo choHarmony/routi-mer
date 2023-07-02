@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var routineList = ArrayList<RoutineListData>()
+    private var groupList = ArrayList<GroupListData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,9 +44,24 @@ class MainActivity : AppCompatActivity() {
             add(RoutineListData("거북목 스트레칭", "개쩌는 효과!"))
         }
 
+        val groupNameList = resources.getStringArray(R.array.routine_group).toList()
+        groupList.apply {
+            for (i in 1 until groupNameList.size) {
+                add(GroupListData(groupNameList[i]))
+            }
+
+        }
+
         binding.addRoutine.setOnClickListener {
             val intent = Intent(this, AddRoutineActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.btnGroupManage.setOnClickListener {
+            val adapter = GroupListAdapter()
+            val bottomDialogFragment = AddGroupDialogFragment(adapter)
+            adapter.setItem(groupList)
+            bottomDialogFragment.show(supportFragmentManager, "TAG")
         }
 
 
