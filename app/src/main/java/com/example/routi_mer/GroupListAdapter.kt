@@ -1,10 +1,12 @@
 package com.example.routi_mer
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 
@@ -20,9 +22,22 @@ class GroupListAdapter() :
         return Holder(groupListView)
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
+    override fun onBindViewHolder(holder: Holder, @SuppressLint("RecyclerView") position: Int) {
         val item = groupList[position]
         holder.bind(item)
+
+        holder.view.findViewById<Button>(R.id.btn_group_edit).setOnClickListener {
+            val dialog = EditGroupNameDialog(holder.view.context)
+            dialog.myDlg()
+
+            dialog.setOnClickedListener(object : EditGroupNameDialog.ButtonClickListener {
+                override fun onClicked(editedGroupName: String) {
+                    // roomdb에서도 편집하는 코드 추가하는 거 잊지 말기~!
+                    groupList[position].groupName = editedGroupName
+                    notifyItemChanged(position)
+                }
+            })
+        }
 
         holder.view.findViewById<Button>(R.id.btn_group_delete).setOnClickListener {
             // roomdb에서도 삭제시키는 코드 추가하는 거 잊지 말기~!
