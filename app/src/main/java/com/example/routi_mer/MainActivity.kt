@@ -1,5 +1,6 @@
 package com.example.routi_mer
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private var routineList = ArrayList<RoutineListData>()
     private var groupList = ArrayList<GroupListData>()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,7 +43,12 @@ class MainActivity : AppCompatActivity() {
             add(RoutineListData("거북목 스트레칭", "개쩌는 효과!"))
         }
 
-        val groupNameList = resources.getStringArray(R.array.routine_group).toList()
+        binding.addRoutine.setOnClickListener {
+            val intent = Intent(this, AddRoutineActivity::class.java)
+            startActivity(intent)
+        }
+
+        var groupNameList = resources.getStringArray(R.array.routine_group).toMutableList()
         groupList.apply {
             for (i in 1 until groupNameList.size) {
                 add(GroupListData(groupNameList[i]))
@@ -49,12 +56,10 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        binding.addRoutine.setOnClickListener {
-            val intent = Intent(this, AddRoutineActivity::class.java)
-            startActivity(intent)
-        }
-
         binding.btnGroupManage.setOnClickListener {
+            // bottomsheetfragment에서 roomdb에 새 그룹 추가해주고
+            // 위에 grouplist에는 roomdb에 있는 그룹명을 add해주어 fragment 지웠다 다시 호출해도
+            // 그룹명이 유지될 수 있도록 해주기
             val adapter = GroupListAdapter()
             val bottomDialogFragment = AddGroupBottomSheetFragment(adapter)
             adapter.setItem(groupList)

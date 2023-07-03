@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.routi_mer.databinding.BottomSheetAddGroupLayoutBinding
 
 
@@ -17,8 +18,8 @@ class AddGroupBottomSheetFragment(var adapter: GroupListAdapter) : BottomSheetDi
 
     private val data: MutableList<GroupListData> = ArrayList()
     private lateinit var binding: BottomSheetAddGroupLayoutBinding
-    var name = ""
-    private var groupList: MutableList<GroupListData> = ArrayList()
+    lateinit var recyclerView: RecyclerView
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,17 @@ class AddGroupBottomSheetFragment(var adapter: GroupListAdapter) : BottomSheetDi
         binding = BottomSheetAddGroupLayoutBinding.inflate(layoutInflater)
         val view = inflater.inflate(R.layout.bottom_sheet_add_group_layout, container, false)
         val btnAddGroup = view.findViewById<Button>(R.id.btn_add_group)
+
+        val groupNameList = view.context.resources.getStringArray(R.array.routine_group).toMutableList()
+        data.apply {
+            // 나중에는 groupNameList를 roomdb에서 받아오는 거로 변경하면 될듯!
+            for (i in 1 until groupNameList.size) {
+                add(GroupListData(groupNameList[i]))
+            }
+
+        }
+
+
         btnAddGroup.setOnClickListener {
             val dialog = AddGroupDialog(view.context)
             dialog.myDlg()
@@ -41,20 +53,18 @@ class AddGroupBottomSheetFragment(var adapter: GroupListAdapter) : BottomSheetDi
             dialog.setOnClickedListener(object : AddGroupDialog.ButtonClickListener {
                 override fun onClicked(addedGroupName: String) {
                     // string-array 추가
-                    val groupNameList = view.context.resources.getStringArray(R.array.routine_group).toMutableList()
                     groupNameList.add(addedGroupName)
-                    name = addedGroupName
+                    data.add(GroupListData(addedGroupName))
 
                     // recyclerview 추가
+                    recyclerView = view.findViewById(R.id.group_list) as RecyclerView
+                    recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                    recyclerView.adapter = GroupListAdapter(data)
 
-//                    // recyclerview 추가
-//                    val mAdapter = GroupListAdapter(data)
-//                    binding.groupList.adapter = mAdapter
-//
-//                    val layout = LinearLayoutManager(view.context)
-//                    binding.groupList.layoutManager = layout
-//                    binding.groupList.setHasFixedSize(true)
-//                    mAdapter.addItem(GroupListData(addedGroupName))
+                    val mAdapter = GroupListAdapter(data)
+                    binding.groupList.adapter = mAdapter
+                    mAdapter.setItem(data)
+
                 }
             })
         }
@@ -66,29 +76,5 @@ class AddGroupBottomSheetFragment(var adapter: GroupListAdapter) : BottomSheetDi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<RecyclerView>(R.id.group_list).adapter = adapter
-
-//        // recyclerview 추가
-//        viewManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
-//        viewAdapter = GroupListAdapter()
-//        recyclerView = binding.groupList.apply {
-//            setHasFixedSize(true)
-//            layoutManager = viewManager
-//            adapter = viewAdapter
-//        }
-//
-//        groupList.apply {
-//            add(GroupListData(name))
-//            adapter.notifyDataSetChanged()
-//        }
-
-
-
-//        val mAdapter = GroupListAdapter(data)
-//        binding.groupList.adapter = mAdapter
-//
-//        val layout = LinearLayoutManager(view.context)
-//        binding.groupList.layoutManager = layout
-//        binding.groupList.setHasFixedSize(true)
-//        mAdapter.addItem(GroupListData(name))
     }
 }

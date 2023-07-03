@@ -1,6 +1,7 @@
 package com.example.routi_mer
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,11 +15,6 @@ class GroupListAdapter(var groupList: MutableList<GroupListData> = ArrayList()) 
     RecyclerView.Adapter<GroupListAdapter.Holder>() {
 
     //private var groupList: MutableList<GroupListData> = ArrayList()
-
-    fun addItem(data: GroupListData) {
-        groupList.add(data)
-        notifyDataSetChanged()
-    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
