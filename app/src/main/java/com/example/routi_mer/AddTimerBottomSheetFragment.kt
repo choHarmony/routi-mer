@@ -1,6 +1,8 @@
 package com.example.routi_mer
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.Intent
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.net.Uri
@@ -10,9 +12,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
 import com.example.routi_mer.databinding.BottomSheetAddTimerLayoutBinding
 
 
@@ -74,11 +78,11 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
 
             builder.setPositiveButton("확인") { dialog, which ->
                 btnOneSetMusic.text = musicList[oneSetMusicIdx]
-                ringtone.stop()
+                //ringtone.stop()
             }
 
             builder.setNegativeButton("취소") { dialog, which ->
-                ringtone.stop()
+                //ringtone.stop()
             }
 
             builder.show()
@@ -99,17 +103,20 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
 
             builder.setPositiveButton("확인") { dialog, which ->
                 btnFullSetMusic.text = musicList[fullSetMusicIdx]
-                fullRingtone.stop()
+                //fullRingtone.stop()
             }
 
             builder.setNegativeButton("취소") { dialog, which ->
-                fullRingtone.stop()
+                //fullRingtone.stop()
             }
 
             builder.show()
         }
 
         btnTimerAdd.setOnClickListener {
+            // timer 추가 액티비티에 새로운 recyclerview 뷰 추가를 위한 데이터 전달
+            AddRoutineActivity().receiveData(editTimerTitle.text.toString(), editTimerDes.text.toString(), editTimerSec.text.toString(), editTimerSet.text.toString())
+
             // db에 새로운 타이머 데이터 추가 동작
             dismiss()
         }

@@ -29,8 +29,5 @@ interface RoutineListDao {
     @Query("UPDATE RoutineList SET routineGroup = :routineGroup WHERE mainId = :mainId")
     fun updateGroupByRoutineId(mainId: Int, routineGroup: String)
 
-    @Query("UPDATE TimerList SET timerDes = :timerDes WHERE mainId = :mainId")
-    fun updateDesByTimerId(mainId: Int, timerDes: String)
-
 
 }
