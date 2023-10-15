@@ -118,12 +118,23 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
             // timer 추가 액티비티에 새로운 recyclerview 뷰 추가를 위한 데이터 전달
             sendEventListener.sendTimerData(editTimerTitle.text.toString(), editTimerDes.text.toString(), editTimerSec.text.toString(), editTimerSet.text.toString())
 
+            // editText에 있는 애들 다 초기화
+            editTimerTitle.text.clear()
+            editTimerDes.text.clear()
+            editTimerSec.text.clear()
+            editTimerSet.text.clear()
+
             // db에 새로운 타이머 데이터 추가 동작
 
             dismiss()
         }
 
         btnTimerAddQuit.setOnClickListener {
+            editTimerTitle.text.clear()
+            editTimerDes.text.clear()
+            editTimerSec.text.clear()
+            editTimerSet.text.clear()
+
             dismiss()
         }
 
