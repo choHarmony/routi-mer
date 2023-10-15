@@ -1,28 +1,16 @@
 package com.example.routi_mer
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routi_mer.databinding.ActivityAddRoutineBinding
-import com.example.routi_mer.databinding.ActivityMainBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding
-import java.util.logging.Logger.global
-import kotlin.concurrent.timer
 
 
-class AddRoutineActivity : AppCompatActivity() {
+class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener {
 
     private lateinit var binding: ActivityAddRoutineBinding
     private lateinit var dialogBinding: LayoutDialogSetTimerTitleBinding
@@ -57,10 +45,6 @@ class AddRoutineActivity : AppCompatActivity() {
 
         binding.addTimer.setOnClickListener {
             addTimerBTSFragment.show(supportFragmentManager, addTimerBTSFragment.tag)
-//            timerList.apply{
-//                add(TimerListData("a", "b", "20", "3"))
-//            }
-//            viewAdapter.notifyItemInserted(timerList.size)
         }
 
 
@@ -97,10 +81,15 @@ class AddRoutineActivity : AppCompatActivity() {
     }
 
 
-    fun receiveData(t: String, d: String, sec: String, set: String) {
-        Log.d("좀돼라", "data received, ${t}")
+    override fun sendTimerData(t: String, d: String, sec: String, set: String) {
 
+        val rView: RecyclerView = findViewById(R.id.timer_list)
+        viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         viewAdapter = TimerListAdapter(timerList)
+        recyclerView = rView.apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
 
         timerList.add(TimerListData(t, d, sec, set))
         viewAdapter.notifyItemInserted(timerList.size)
