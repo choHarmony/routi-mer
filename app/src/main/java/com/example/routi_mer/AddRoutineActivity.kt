@@ -10,7 +10,7 @@ import com.example.routi_mer.databinding.ActivityAddRoutineBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding
 
 
-class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener {
+class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener {
 
     private lateinit var binding: ActivityAddRoutineBinding
     private lateinit var dialogBinding: LayoutDialogSetTimerTitleBinding
@@ -98,9 +98,21 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener {
 
     }
 
+    override fun sendPositionToDelete(pos: Int) {
 
+        val rView: RecyclerView = findViewById(R.id.timer_list)
+        viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        viewAdapter = TimerListAdapter(timerList)
+        recyclerView = rView.apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
 
+        timerList.removeAt(pos)
+        viewAdapter.notifyItemRemoved(pos)
+        viewAdapter.notifyItemChanged(pos)
 
+    }
 
 
 }

@@ -11,11 +11,21 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 
 
 class TimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
 
     private val mContext: Context = context
+
+    lateinit var sendPositionToDeleteListener: SendPositionToDeleteListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        sendPositionToDeleteListener = context as SendPositionToDeleteListener
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,11 +48,14 @@ class TimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
         }
 
         btnTimerDelete.setOnClickListener {
-            Toast.makeText(mContext, "타이머 삭제", Toast.LENGTH_SHORT).show()
+
+            sendPositionToDeleteListener.sendPositionToDelete(getItemPosition.pos)
+
             dismiss()
         }
 
         return view
 
     }
+
 }

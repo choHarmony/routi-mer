@@ -1,5 +1,7 @@
 package com.example.routi_mer
 
+import android.app.ProgressDialog.show
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,12 +22,16 @@ class TimerListAdapter(private val timerList: ArrayList<TimerListData>) :
 
         private val TimerBottomSheetFragment = TimerBottomSheetFragment(itemView.context)
 
-        init {
-            timerMenuBtn.setOnClickListener {
-                val fm = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                TimerBottomSheetFragment.show(fm, TimerBottomSheetFragment.tag)
-            }
-        }
+//        init {
+//            timerMenuBtn.setOnClickListener {
+//                val fm = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+//                TimerBottomSheetFragment.show(fm, TimerBottomSheetFragment.tag)
+//
+//            }
+//
+//
+//        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -39,11 +45,20 @@ class TimerListAdapter(private val timerList: ArrayList<TimerListData>) :
         holder.timerDescription.text = timerList[position].timerDescription
         holder.timerSec.text = timerList[position].timerSec
         holder.timerSet.text = timerList[position].timerSet
+
+        holder.itemView.findViewById<ImageButton>(R.id.btn_timer_menu).setOnClickListener {
+            val TimerBottomSheetFragment = TimerBottomSheetFragment(holder.itemView.context)
+            val fm = (holder.itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            TimerBottomSheetFragment.show(fm, TimerBottomSheetFragment.tag)
+            getItemPosition.pos = holder.bindingAdapterPosition
+        }
+
     }
 
     override fun getItemCount(): Int {
         return timerList.size
     }
+
 
 
 }
