@@ -11,12 +11,15 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
 
 
 class TimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
 
     private val mContext: Context = context
+    private val editTimerBTSFragment = EditTimerBottomSheetFragment(mContext)
+    val fm = (mContext as AppCompatActivity).supportFragmentManager.beginTransaction()
 
     lateinit var sendPositionToDeleteListener: SendPositionToDeleteListener
 
@@ -43,7 +46,7 @@ class TimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
         val btnTimerDelete: Button = view.findViewById(R.id.btn_delete)
 
         btnTimerEdit.setOnClickListener {
-            Toast.makeText(mContext, "타이머 편집", Toast.LENGTH_SHORT).show()
+            editTimerBTSFragment.show(fm, editTimerBTSFragment.tag)
             dismiss()
         }
 

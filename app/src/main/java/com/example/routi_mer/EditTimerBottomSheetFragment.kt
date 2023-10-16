@@ -1,31 +1,38 @@
 package com.example.routi_mer
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import com.example.routi_mer.R.id
 import com.example.routi_mer.databinding.BottomSheetAddTimerLayoutBinding
+import com.example.routi_mer.databinding.BottomSheetEditTimerLayoutBinding
 
 
-class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
+class EditTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
 
     private val mContext: Context = context
-    private lateinit var binding: BottomSheetAddTimerLayoutBinding
+    private lateinit var binding: BottomSheetEditTimerLayoutBinding
     private lateinit var ringtone: Ringtone
     private lateinit var fullRingtone: Ringtone
 
-    lateinit var sendEventListener: SendNewTimerListener
+    lateinit var sendEventListener: SendEditTimerListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        sendEventListener = context as SendNewTimerListener
+        sendEventListener = context as SendEditTimerListener
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,18 +46,25 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = BottomSheetAddTimerLayoutBinding.inflate(layoutInflater)
+        binding = BottomSheetEditTimerLayoutBinding.inflate(layoutInflater)
 
-        val view = inflater.inflate(R.layout.bottom_sheet_add_timer_layout, container, false)
-        val editTimerTitle: EditText = view.findViewById(R.id.edit_timer_title)
-        val editTimerDes: EditText = view.findViewById(R.id.edit_timer_des)
-        val editTimerSec: EditText = view.findViewById(R.id.edit_timer_sec)
-        val editTimerSet: EditText = view.findViewById(R.id.edit_timer_set)
+        val view = inflater.inflate(R.layout.bottom_sheet_edit_timer_layout, container, false)
+        val editTimerTitle: EditText = view.findViewById(R.id.rewrite_timer_title)
+        val editTimerDes: EditText = view.findViewById(R.id.rewrite_timer_des)
+        val editTimerSec: EditText = view.findViewById(R.id.rewrite_timer_sec)
+        val editTimerSet: EditText = view.findViewById(R.id.rewrite_timer_set)
 
-        val btnOneSetMusic: Button = view.findViewById(R.id.btn_one_set_music)
-        val btnFullSetMusic: Button = view.findViewById(R.id.btn_full_set_music)
-        val btnTimerAdd: Button = view.findViewById(R.id.btn_timer_add)
-        val btnTimerAddQuit: Button = view.findViewById(R.id.btn_timer_add_quit)
+        val btnReOneSetMusic: Button = view.findViewById(R.id.btn_re_one_set_music)
+        val btnReFullSetMusic: Button = view.findViewById(R.id.btn_re_full_set_music)
+        val btnTimerEdit: Button = view.findViewById(R.id.btn_timer_edit)
+        val btnTimerEditQuit: Button = view.findViewById(R.id.btn_timer_edit_quit)
+
+        editTimerTitle.setText(getItemPosition.timerTitle)
+        editTimerDes.setText(getItemPosition.timerDes)
+        editTimerSec.setText(getItemPosition.timerSec)
+        editTimerSet.setText(getItemPosition.timerSet)
+        btnReOneSetMusic.text = getItemPosition.oneSetMusicTitle
+        btnReFullSetMusic.text = getItemPosition.fullSetMusicTitle
 
 
         var oneSetMusicIdx = 0
@@ -65,7 +79,7 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
             }
         }
 
-        btnOneSetMusic.setOnClickListener {
+        btnReOneSetMusic.setOnClickListener {
             val builder = AlertDialog.Builder(mContext, R.style.CustomDialogTheme)
             builder.setTitle("한 세트 끝났을 때 효과음 선택")
             builder.setCancelable(false)
@@ -78,7 +92,7 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
             }
 
             builder.setPositiveButton("확인") { dialog, which ->
-                btnOneSetMusic.text = musicList[oneSetMusicIdx]
+                btnReOneSetMusic.text = musicList[oneSetMusicIdx]
                 //ringtone.stop()
             }
 
@@ -90,7 +104,7 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
 
         }
 
-        btnFullSetMusic.setOnClickListener {
+        btnReFullSetMusic.setOnClickListener {
             val builder = AlertDialog.Builder(mContext, R.style.CustomDialogTheme)
             builder.setTitle("세트가 완전히 끝났을 때 효과음 선택")
             builder.setCancelable(false)
@@ -103,7 +117,7 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
             }
 
             builder.setPositiveButton("확인") { dialog, which ->
-                btnFullSetMusic.text = musicList[fullSetMusicIdx]
+                btnReFullSetMusic.text = musicList[fullSetMusicIdx]
                 //fullRingtone.stop()
             }
 
@@ -114,9 +128,9 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
             builder.show()
         }
 
-        btnTimerAdd.setOnClickListener {
+        btnTimerEdit.setOnClickListener {
             // timer 추가 액티비티에 새로운 recyclerview 뷰 추가를 위한 데이터 전달
-            sendEventListener.sendTimerData(editTimerTitle.text.toString(), editTimerDes.text.toString(), editTimerSec.text.toString(), editTimerSet.text.toString(), btnOneSetMusic.text.toString(), btnFullSetMusic.text.toString())
+            sendEventListener.editTimerData(editTimerTitle.text.toString(), editTimerDes.text.toString(), editTimerSec.text.toString(), editTimerSet.text.toString(), btnReOneSetMusic.text.toString(), btnReFullSetMusic.text.toString())
 
             // editText에 있는 애들 다 초기화
             editTimerTitle.text.clear()
@@ -129,7 +143,7 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
             dismiss()
         }
 
-        btnTimerAddQuit.setOnClickListener {
+        btnTimerEditQuit.setOnClickListener {
             editTimerTitle.text.clear()
             editTimerDes.text.clear()
             editTimerSec.text.clear()
@@ -142,7 +156,6 @@ class AddTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment(
         return view
 
     }
-
 
 
 }

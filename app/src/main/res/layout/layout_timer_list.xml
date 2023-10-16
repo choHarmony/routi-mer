@@ -113,6 +113,26 @@
             app:layout_constraintTop_toTopOf="@+id/img_clock"
             app:layout_constraintBottom_toBottomOf="@+id/img_clock" />
 
+        <TextView
+            android:id="@+id/text_one_set_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@id/text2"
+            app:layout_constraintTop_toTopOf="@+id/img_clock"
+            app:layout_constraintBottom_toBottomOf="@+id/img_clock" />
+
+        <TextView
+            android:id="@+id/text_full_set_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@+id/text_one_set_music"
+            app:layout_constraintTop_toTopOf="@id/img_clock"
+            app:layout_constraintBottom_toBottomOf="@id/img_clock" />
+
         <ImageView
             android:layout_width="40dp"
             android:layout_height="70dp"

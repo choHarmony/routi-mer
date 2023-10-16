@@ -10,7 +10,7 @@ import com.example.routi_mer.databinding.ActivityAddRoutineBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding
 
 
-class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener {
+class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener, SendEditTimerListener {
 
     private lateinit var binding: ActivityAddRoutineBinding
     private lateinit var dialogBinding: LayoutDialogSetTimerTitleBinding
@@ -40,7 +40,7 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
         setTimerRecyclerview()
         timerList.apply {
-            add(TimerListData("목 옆으로 당기기", "목을 옆으로 당기면 된다", "20", "3"))
+            add(TimerListData("목 옆으로 당기기", "목을 옆으로 당기면 된다", "20", "3", "", ""))
         }
 
         binding.addTimer.setOnClickListener {
@@ -81,7 +81,7 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
     }
 
 
-    override fun sendTimerData(t: String, d: String, sec: String, set: String) {
+    override fun sendTimerData(t: String, d: String, sec: String, set: String, one: String, full: String) {
 
         val rView: RecyclerView = findViewById(R.id.timer_list)
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -91,7 +91,7 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
             adapter = viewAdapter
         }
 
-        timerList.add(TimerListData(t, d, sec, set))
+        timerList.add(TimerListData(t, d, sec, set, one, full))
         viewAdapter.notifyItemInserted(timerList.size)
 
         // delete
@@ -111,6 +111,28 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
         timerList.removeAt(pos)
         viewAdapter.notifyItemRemoved(pos)
         viewAdapter.notifyItemChanged(pos)
+
+    }
+
+    override fun editTimerData(t: String, d: String, sec: String, set: String, one: String, full: String) {
+
+        val rView: RecyclerView = findViewById(R.id.timer_list)
+        viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        viewAdapter = TimerListAdapter(timerList)
+        recyclerView = rView.apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
+
+        timerList[getItemPosition.pos].timerTitle = t
+        timerList[getItemPosition.pos].timerDescription = d
+        timerList[getItemPosition.pos].timerSec = sec
+        timerList[getItemPosition.pos].timerSet = set
+        timerList[getItemPosition.pos].oneSetMusicTitle = one
+        timerList[getItemPosition.pos].fullSetMusicTitle = full
+
+
+        viewAdapter.notifyItemChanged(getItemPosition.pos)
 
     }
 

@@ -5,4 +5,6 @@ data class TimerListData(
     var timerDescription: String,
     var timerSec: String,
     var timerSet: String,
+    var oneSetMusicTitle: String,
+    var fullSetMusicTitle: String
 )
