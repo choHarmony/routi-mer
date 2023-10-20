@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routi_mer.databinding.ActivityAddRoutineBinding
@@ -19,6 +20,9 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var timerList = ArrayList<TimerListData>()
+
+    private val recyclerViewAdapter by lazy { TimerListAdapter(timerList) }
+    private val itemTouchHelper by lazy { ItemTouchHelper(ItemTouchCallback(recyclerViewAdapter)) }
 
     private val addTimerBTSFragment = AddTimerBottomSheetFragment(this)
 
@@ -57,12 +61,15 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
     private fun setTimerRecyclerview() {
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        viewAdapter = TimerListAdapter(timerList)
+        viewAdapter = recyclerViewAdapter
         recyclerView = binding.timerList.apply {
             //setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
+
+        itemTouchHelper.attachToRecyclerView(binding.timerList)
+
     }
 
 
@@ -85,11 +92,12 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
         val rView: RecyclerView = findViewById(R.id.timer_list)
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        viewAdapter = TimerListAdapter(timerList)
+        viewAdapter = recyclerViewAdapter
         recyclerView = rView.apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+        itemTouchHelper.attachToRecyclerView(rView)
 
         timerList.add(TimerListData(t, d, sec, set, one, full))
         viewAdapter.notifyItemInserted(timerList.size)
@@ -102,11 +110,12 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
         val rView: RecyclerView = findViewById(R.id.timer_list)
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        viewAdapter = TimerListAdapter(timerList)
+        viewAdapter = recyclerViewAdapter
         recyclerView = rView.apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+        itemTouchHelper.attachToRecyclerView(rView)
 
         timerList.removeAt(pos)
         viewAdapter.notifyItemRemoved(pos)
@@ -118,11 +127,12 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
         val rView: RecyclerView = findViewById(R.id.timer_list)
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
-        viewAdapter = TimerListAdapter(timerList)
+        viewAdapter = recyclerViewAdapter
         recyclerView = rView.apply {
             layoutManager = viewManager
             adapter = viewAdapter
         }
+        itemTouchHelper.attachToRecyclerView(rView)
 
         timerList[getItemPosition.pos].timerTitle = t
         timerList[getItemPosition.pos].timerDescription = d

@@ -13,7 +13,7 @@ import org.w3c.dom.Text
 import kotlin.concurrent.timer
 
 class TimerListAdapter(private val timerList: ArrayList<TimerListData>) :
-    RecyclerView.Adapter<TimerListAdapter.ViewHolder>() {
+    RecyclerView.Adapter<TimerListAdapter.ViewHolder>(), ItemTouchHelperListener {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         public var timerTitle: TextView = itemView.findViewById(R.id.timer_title)
@@ -73,6 +73,12 @@ class TimerListAdapter(private val timerList: ArrayList<TimerListData>) :
         return timerList.size
     }
 
+    override fun onItemMove(from: Int, to: Int) {
+        val item: TimerListData = timerList[from]
+        timerList.removeAt(from)
+        timerList.add(to, item)
+        notifyItemMoved(from, to)
+    }
 
 
 }
