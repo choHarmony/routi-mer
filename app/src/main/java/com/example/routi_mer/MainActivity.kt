@@ -8,6 +8,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routi_mer.databinding.ActivityMainBinding
@@ -21,6 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var routineList = ArrayList<RoutineListData>()
     private var groupList = ArrayList<GroupListData>()
+
+    lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,13 +43,11 @@ class MainActivity : AppCompatActivity() {
         routineList.apply {
             add(RoutineListData("거북목 스트레칭", "개쩌는 효과!"))
             add(RoutineListData("너무 덥다", "에어컨 각"))
-            add(RoutineListData("외로운 날들이여", "모두 다 안녕~"))
-            add(RoutineListData("거북목 스트레칭", "개쩌는 효과!"))
         }
 
         binding.addRoutine.setOnClickListener {
             val intent = Intent(this, AddRoutineActivity::class.java)
-            startActivity(intent)
+            activityResultLauncher.launch(intent)
         }
 
         var groupNameList = resources.getStringArray(R.array.routine_group).toMutableList()
@@ -66,15 +68,20 @@ class MainActivity : AppCompatActivity() {
             bottomDialogFragment.show(supportFragmentManager, "TAG")
         }
 
+        // 루틴 추가하고 다시 돌아왔을 때 recyclerview 갱신하기
+        activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                val title = it.data?.getStringExtra("title") ?: ""
+                val des = it.data?.getStringExtra("des") ?: ""
+
+                routineList.add(RoutineListData(title, des))
+                viewAdapter.notifyItemInserted(routineList.size)
+            }
+        }
+
 
 
     }
-
-
-    // 루틴 추가하고 다시 돌아왔을 때 recyclerview 갱신하기
-//    override fun onRestart() {
-//        super.onRestart()
-//    }
 
 
 
@@ -99,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         binding.spinnerGroupSelect.setSelection(0)
         binding.spinnerGroupSelect.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                Toast.makeText(this@MainActivity, "${spinnerGroupData[binding.spinnerGroupSelect.selectedItemPosition]} selected", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@MainActivity, "${spinnerGroupData[binding.spinnerGroupSelect.selectedItemPosition]} selected", Toast.LENGTH_SHORT).show()
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {

@@ -77,7 +77,7 @@ class EditRoutineTitleDialog(private val context: AppCompatActivity) {
                 Toast.makeText(context, "루틴 이름은 필수 입력사항입니다.", Toast.LENGTH_SHORT).show()
             }
             else {
-                onClickListener.onClicked(binding.editTitle.text.toString(), binding.editDes.text.toString())
+                onClickListener.onClicked(binding.editTitle.text.toString(), binding.editDes.text.toString(), binding.btnGroup.text.toString())
                 dlg.dismiss()
             }
         }
@@ -92,7 +92,7 @@ class EditRoutineTitleDialog(private val context: AppCompatActivity) {
 
 
     interface OnDialogClickListener {
-        fun onClicked(title: String, des: String)
+        fun onClicked(title: String, des: String, group: String)
     }
 
 

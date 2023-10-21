@@ -1,5 +1,6 @@
 package com.example.routi_mer
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routi_mer.databinding.ActivityAddRoutineBinding
+import com.example.routi_mer.databinding.ActivityMainBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding
 
 
@@ -15,6 +17,7 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
     private lateinit var binding: ActivityAddRoutineBinding
     private lateinit var dialogBinding: LayoutDialogSetTimerTitleBinding
+    private lateinit var mainBinding: ActivityMainBinding
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -29,9 +32,9 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("좀돼라", "oncreated")
         binding = ActivityAddRoutineBinding.inflate(layoutInflater)
         dialogBinding = LayoutDialogSetTimerTitleBinding.inflate(layoutInflater)
+        mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnExit.setOnClickListener {
@@ -49,6 +52,28 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
         binding.addTimer.setOnClickListener {
             addTimerBTSFragment.show(supportFragmentManager, addTimerBTSFragment.tag)
+        }
+
+        val routineDB = RoutineDB.getRoutineList(this)
+        binding.btnAdd.setOnClickListener {
+
+            routineDB!!.RoutineListDao().insertRoutine(
+                RoutineList(
+                    binding.textRoutineTitle.text.toString(),
+                    binding.routineDes.text.toString(),
+                    binding.routineGroup.text.toString(),
+                    timerList
+                )
+            )
+
+            val intent = Intent(this, MainActivity::class.java).apply {
+                putExtra("title", binding.textRoutineTitle.text.toString())
+                putExtra("des", binding.routineDes.text.toString())
+            }
+            setResult(RESULT_OK, intent)
+            if (!isFinishing) finish()
+
+
         }
 
 
@@ -78,8 +103,10 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
         dialog.showDialog(binding.textRoutineTitle.text.toString(), "")
         // 후에 db 구축하면 des 부분은 db에서 불러오는 거로 하면 됨!
         dialog.setOnClickListener(object : EditRoutineTitleDialog.OnDialogClickListener {
-            override fun onClicked(title: String, des: String) {
+            override fun onClicked(title: String, des: String, group: String) {
                 binding.textRoutineTitle.text = title
+                binding.routineDes.text = des
+                binding.routineGroup.text = group
                 // des는 이 화면에 보이지 않고 데이터베이스에 저장만 해놓을 예정
                 // 따라서 여기는 더 추가할 필요 없음
             }
