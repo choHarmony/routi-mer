@@ -3,8 +3,6 @@ package com.example.routi_mer
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -58,11 +56,11 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
         binding.btnAdd.setOnClickListener {
 
             routineDB!!.RoutineListDao().insertRoutine(
-                RoutineList(
+                RoutineRoomData(
                     binding.textRoutineTitle.text.toString(),
                     binding.routineDes.text.toString(),
                     binding.routineGroup.text.toString(),
-                    timerList
+                    timerList.toMutableList()
                 )
             )
 

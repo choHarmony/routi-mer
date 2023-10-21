@@ -1,6 +1,5 @@
 package com.example.routi_mer
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -21,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private var routineList = ArrayList<RoutineListData>()
+    private var routineList = ArrayList<RoutineRecyclerViewData>()
     private var groupList = ArrayList<GroupListData>()
 
     lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
@@ -41,8 +40,17 @@ class MainActivity : AppCompatActivity() {
         setRoutineRecyclerview()
         // 루틴 리스트 더미데이터 추가
         routineList.apply {
-            add(RoutineListData("거북목 스트레칭", "개쩌는 효과!"))
-            add(RoutineListData("너무 덥다", "에어컨 각"))
+            add(RoutineRecyclerViewData("거북목 스트레칭", "개쩌는 효과!"))
+            add(RoutineRecyclerViewData("너무 덥다", "에어컨 각"))
+        }
+
+        val routineDB = RoutineDB.getRoutineList(this)
+        if (routineDB != null) {
+            val allRoutine = routineDB.RoutineListDao().selectAllRoutine()
+
+            for (i in allRoutine.indices) {
+                routineList.add(RoutineRecyclerViewData(allRoutine[i].mainTitle, allRoutine[i].mainDes))
+            }
         }
 
         binding.addRoutine.setOnClickListener {
@@ -74,11 +82,10 @@ class MainActivity : AppCompatActivity() {
                 val title = it.data?.getStringExtra("title") ?: ""
                 val des = it.data?.getStringExtra("des") ?: ""
 
-                routineList.add(RoutineListData(title, des))
+                routineList.add(RoutineRecyclerViewData(title, des))
                 viewAdapter.notifyItemInserted(routineList.size)
             }
         }
-
 
 
     }

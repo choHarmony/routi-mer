@@ -5,12 +5,12 @@ import com.google.gson.Gson
 
 class DataListConverters {
     @TypeConverter
-    fun listToJson(value: ArrayList<TimerListData>?): String? {
+    fun listToJson(value: List<TimerListData>?): String? {
         return Gson().toJson(value)
     }
 
     @TypeConverter
-    fun jsonToList(value: String): ArrayList<TimerListData> {
-        return Gson().fromJson(value, Array<TimerListData>::class.java)?.toList() as ArrayList<TimerListData>
+    fun jsonToList(value: String): List<TimerListData> {
+        return Gson().fromJson(value, Array<TimerListData>::class.java).toMutableList()
     }
 }

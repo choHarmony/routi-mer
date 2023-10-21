@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class RoutineListAdapter(private val routineList: ArrayList<RoutineListData>) :
+class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewData>) :
     RecyclerView.Adapter<RoutineListAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

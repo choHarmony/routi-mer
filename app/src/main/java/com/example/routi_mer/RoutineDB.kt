@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverter
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities = [RoutineList::class], version = 1)
+@Database(entities = [RoutineRoomData::class], version = 2, exportSchema = false)
 @TypeConverters(DataListConverters::class)
 abstract class RoutineDB: RoomDatabase() {
     abstract fun RoutineListDao(): RoutineListDao
@@ -23,10 +24,16 @@ abstract class RoutineDB: RoomDatabase() {
                         context.applicationContext,
                         RoutineDB::class.java,
                         "RoutineList-DB"
-                    ).allowMainThreadQueries().build()
+                    ).allowMainThreadQueries().addMigrations(migration_1_2).fallbackToDestructiveMigration().build()
                 }
             }
             return routineListData
         }
+    }
+}
+
+val migration_1_2 = object : Migration(1, 2) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE RoutineRoomData Add COLUMN timerList ArrayList NOT NULL default 0")
     }
 }
