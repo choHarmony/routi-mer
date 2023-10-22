@@ -1,19 +1,17 @@
 package com.example.routi_mer
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.routi_mer.databinding.ActivityAddRoutineBinding
+import com.example.routi_mer.databinding.ActivityEditRoutineBinding
 import com.example.routi_mer.databinding.ActivityMainBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding
 
+class EditRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener, SendEditTimerListener {
 
-class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener, SendEditTimerListener {
-
-    private lateinit var binding: ActivityAddRoutineBinding
+    private lateinit var binding: ActivityEditRoutineBinding
     private lateinit var dialogBinding: LayoutDialogSetTimerTitleBinding
     private lateinit var mainBinding: ActivityMainBinding
 
@@ -30,46 +28,60 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddRoutineBinding.inflate(layoutInflater)
+        binding = ActivityEditRoutineBinding.inflate(layoutInflater)
         dialogBinding = LayoutDialogSetTimerTitleBinding.inflate(layoutInflater)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnExit.setOnClickListener {
+        binding.btnEditRoutineExit.setOnClickListener {
             finish()
         }
 
-        binding.textRoutineTitle.setOnClickListener {
+        binding.editTextRoutineTitle.setOnClickListener {
             setEditTitleDialog()
         }
 
         setTimerRecyclerview()
-        timerList.apply {
-            add(TimerListData("목 옆으로 당기기", "목을 옆으로 당기면 된다", "20", "3", "", ""))
-        }
 
-        binding.addTimer.setOnClickListener {
+        // 기존 타이머들 불러와서 button/recyclerview에 뿌려주기
+        val routineDatabase = RoutineDB.getRoutineList(this)
+        if (routineDatabase != null) {
+            val allRoutine = routineDatabase.RoutineListDao().selectAllRoutine()
+            binding.editTextRoutineTitle.text = allRoutine[GetRoutineItemPosition.routinePos].mainTitle
+            binding.editRoutineDes.text = allRoutine[GetRoutineItemPosition.routinePos].mainDes
+            binding.editRoutineGroup.text = allRoutine[GetRoutineItemPosition.routinePos].routineGroup
+
+            val timerInRoutine = allRoutine[GetRoutineItemPosition.routinePos].routineTimer
+            for (i in 0 until timerInRoutine.size) {
+                timerList.add(timerInRoutine[i])
+            }
+
+        }
+//        timerList.apply {
+//            add(TimerListData("목 옆으로 당기기", "목을 옆으로 당기면 된다", "20", "3", "", ""))
+//        }
+
+
+
+        binding.editRoutineAddTimer.setOnClickListener {
             addTimerBTSFragment.show(supportFragmentManager, addTimerBTSFragment.tag)
         }
 
         val routineDB = RoutineDB.getRoutineList(this)
-        binding.btnAdd.setOnClickListener {
+        binding.btnEditRoutineAdd.setOnClickListener {
 
-            routineDB!!.RoutineListDao().insertRoutine(
-                RoutineRoomData(
-                    binding.textRoutineTitle.text.toString(),
-                    binding.routineDes.text.toString(),
-                    binding.routineGroup.text.toString(),
-                    timerList.toMutableList()
-                )
-            )
+            val allRoutine = routineDB!!.RoutineListDao().selectAllRoutine()
 
-            val intent = Intent(this, MainActivity::class.java).apply {
-                putExtra("title", binding.textRoutineTitle.text.toString())
-                putExtra("des", binding.routineDes.text.toString())
-            }
-            setResult(RESULT_OK, intent)
-            if (!isFinishing) finish()
+            routineDB.RoutineListDao().updateTitleByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editTextRoutineTitle.text.toString())
+            routineDB.RoutineListDao().updateDesByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editRoutineDes.text.toString())
+            routineDB.RoutineListDao().updateGroupByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editRoutineGroup.text.toString())
+            routineDB.RoutineListDao().updateTimerDataByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, timerList.toMutableList())
+
+            GetEditedTitleDes.editedTitle = binding.editTextRoutineTitle.text.toString()
+            GetEditedTitleDes.editedDes = binding.editRoutineDes.text.toString()
+            GetEditedTitleDes.isRoutineChanged = true
+
+            finish()
 
 
         }
@@ -85,26 +97,26 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
     private fun setTimerRecyclerview() {
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         viewAdapter = recyclerViewAdapter
-        recyclerView = binding.timerList.apply {
+        recyclerView = binding.editRoutineTimerList.apply {
             //setHasFixedSize(true)
             layoutManager = viewManager
             adapter = viewAdapter
         }
 
-        itemTouchHelper.attachToRecyclerView(binding.timerList)
+        itemTouchHelper.attachToRecyclerView(binding.editRoutineTimerList)
 
     }
 
 
     private fun setEditTitleDialog() {
         val dialog = EditRoutineTitleDialog(this)
-        dialog.showDialog(binding.textRoutineTitle.text.toString(), binding.routineDes.text.toString())
+        dialog.showDialog(binding.editTextRoutineTitle.text.toString(), binding.editRoutineDes.text.toString())
         // 후에 db 구축하면 des 부분은 db에서 불러오는 거로 하면 됨!
         dialog.setOnClickListener(object : EditRoutineTitleDialog.OnDialogClickListener {
             override fun onClicked(title: String, des: String, group: String) {
-                binding.textRoutineTitle.text = title
-                binding.routineDes.text = des
-                binding.routineGroup.text = group
+                binding.editTextRoutineTitle.text = title
+                binding.editRoutineDes.text = des
+                binding.editRoutineGroup.text = group
                 // des는 이 화면에 보이지 않고 데이터베이스에 저장만 해놓을 예정
                 // 따라서 여기는 더 추가할 필요 없음
             }
@@ -115,7 +127,7 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
     override fun sendTimerData(t: String, d: String, sec: String, set: String, one: String, full: String) {
 
-        val rView: RecyclerView = findViewById(R.id.timer_list)
+        val rView: RecyclerView = findViewById(R.id.edit_routine_timer_list)
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         viewAdapter = recyclerViewAdapter
         recyclerView = rView.apply {
@@ -133,7 +145,7 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
     override fun sendPositionToDelete(pos: Int) {
 
-        val rView: RecyclerView = findViewById(R.id.timer_list)
+        val rView: RecyclerView = findViewById(R.id.edit_routine_timer_list)
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         viewAdapter = recyclerViewAdapter
         recyclerView = rView.apply {
@@ -150,7 +162,7 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
 
     override fun editTimerData(t: String, d: String, sec: String, set: String, one: String, full: String) {
 
-        val rView: RecyclerView = findViewById(R.id.timer_list)
+        val rView: RecyclerView = findViewById(R.id.edit_routine_timer_list)
         viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         viewAdapter = recyclerViewAdapter
         recyclerView = rView.apply {
@@ -170,6 +182,4 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
         viewAdapter.notifyItemChanged(GetTimerItemPosition.pos)
 
     }
-
-
 }

@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 
 @Dao
 interface RoutineListDao {
@@ -13,6 +14,9 @@ interface RoutineListDao {
 
     @Delete
     fun deleteRoutine(routineList: RoutineRoomData)
+
+    @Query("UPDATE RoutineRoomData SET timerList = :routineList WHERE mainId = :mainId")
+    fun updateTimerDataByRoutineId(mainId: Int, routineList: MutableList<TimerListData>)
 
     @Query("SELECT * FROM RoutineRoomData")
     fun selectAllRoutine(): List<RoutineRoomData>

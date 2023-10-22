@@ -1,5 +1,6 @@
 package com.example.routi_mer
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -90,6 +91,17 @@ class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
 
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        if (GetEditedTitleDes.isRoutineChanged) {
+            routineList[GetRoutineItemPosition.routinePos].routineTitle = GetEditedTitleDes.editedTitle
+            routineList[GetRoutineItemPosition.routinePos].routineDescription = GetEditedTitleDes.editedDes
+            viewAdapter.notifyItemChanged(GetRoutineItemPosition.routinePos)
+            GetEditedTitleDes.isRoutineChanged = false
+        }
+
+    }
 
 
 

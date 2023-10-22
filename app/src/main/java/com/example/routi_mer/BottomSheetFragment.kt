@@ -1,6 +1,8 @@
 package com.example.routi_mer
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.LayoutInflater
@@ -8,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 
 
 class BottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
@@ -15,6 +19,7 @@ class BottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
     private val mContext: Context = context
 
     lateinit var sendRoutinePositionListener: SendRoutineListPositionListener
+    //lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -38,9 +43,13 @@ class BottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
         val btnDelete: Button = view.findViewById(R.id.btn_delete)
 
         btnEdit.setOnClickListener {
-            Toast.makeText(mContext, "편집", Toast.LENGTH_SHORT).show()
+            val intent = Intent(mContext, EditRoutineActivity::class.java)
+            startActivity(intent)
+
             dismiss()
         }
+
+
 
         btnDelete.setOnClickListener {
             // recyclerview 삭제를 위해 메인 액티비티에 삭제를 원하는 뷰의 포지션 전달

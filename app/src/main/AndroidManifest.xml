@@ -13,6 +13,13 @@
         android:theme="@style/Theme.Routi_mer"
         tools:targetApi="31">
         <activity
+            android:name=".EditRoutineActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".AddRoutineActivity"
             android:exported="false">
             <meta-data
