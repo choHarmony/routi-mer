@@ -1,7 +1,5 @@
 package com.example.routi_mer
 
-import android.app.ProgressDialog.show
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +7,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import org.w3c.dom.Text
-import kotlin.concurrent.timer
 
 class TimerListAdapter(private val timerList: ArrayList<TimerListData>) :
     RecyclerView.Adapter<TimerListAdapter.ViewHolder>(), ItemTouchHelperListener {
@@ -57,14 +53,14 @@ class TimerListAdapter(private val timerList: ArrayList<TimerListData>) :
             val fm = (holder.itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
             TimerBottomSheetFragment.show(fm, TimerBottomSheetFragment.tag)
 
-            getItemPosition.pos = holder.bindingAdapterPosition
+            GetTimerItemPosition.pos = holder.bindingAdapterPosition
 
-            getItemPosition.timerTitle = timerList[position].timerTitle
-            getItemPosition.timerDes = timerList[position].timerDescription
-            getItemPosition.timerSec = timerList[position].timerSec
-            getItemPosition.timerSet = timerList[position].timerSet
-            getItemPosition.oneSetMusicTitle = timerList[position].oneSetMusicTitle
-            getItemPosition.fullSetMusicTitle = timerList[position].fullSetMusicTitle
+            GetTimerItemPosition.timerTitle = timerList[position].timerTitle
+            GetTimerItemPosition.timerDes = timerList[position].timerDescription
+            GetTimerItemPosition.timerSec = timerList[position].timerSec
+            GetTimerItemPosition.timerSet = timerList[position].timerSet
+            GetTimerItemPosition.oneSetMusicTitle = timerList[position].oneSetMusicTitle
+            GetTimerItemPosition.fullSetMusicTitle = timerList[position].fullSetMusicTitle
         }
 
     }

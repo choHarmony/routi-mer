@@ -1,6 +1,6 @@
 package com.example.routi_mer
 
-open class getItemPosition() {
+open class GetTimerItemPosition() {
     companion object {
         var pos: Int = 0
         var timerTitle: String = ""

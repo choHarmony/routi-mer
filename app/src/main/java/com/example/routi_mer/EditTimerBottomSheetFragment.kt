@@ -1,22 +1,16 @@
 package com.example.routi_mer
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import com.example.routi_mer.R.id
-import com.example.routi_mer.databinding.BottomSheetAddTimerLayoutBinding
 import com.example.routi_mer.databinding.BottomSheetEditTimerLayoutBinding
 
 
@@ -59,12 +53,12 @@ class EditTimerBottomSheetFragment(context: Context) : BottomSheetDialogFragment
         val btnTimerEdit: Button = view.findViewById(R.id.btn_timer_edit)
         val btnTimerEditQuit: Button = view.findViewById(R.id.btn_timer_edit_quit)
 
-        editTimerTitle.setText(getItemPosition.timerTitle)
-        editTimerDes.setText(getItemPosition.timerDes)
-        editTimerSec.setText(getItemPosition.timerSec)
-        editTimerSet.setText(getItemPosition.timerSet)
-        btnReOneSetMusic.text = getItemPosition.oneSetMusicTitle
-        btnReFullSetMusic.text = getItemPosition.fullSetMusicTitle
+        editTimerTitle.setText(GetTimerItemPosition.timerTitle)
+        editTimerDes.setText(GetTimerItemPosition.timerDes)
+        editTimerSec.setText(GetTimerItemPosition.timerSec)
+        editTimerSet.setText(GetTimerItemPosition.timerSet)
+        btnReOneSetMusic.text = GetTimerItemPosition.oneSetMusicTitle
+        btnReFullSetMusic.text = GetTimerItemPosition.fullSetMusicTitle
 
 
         var oneSetMusicIdx = 0

@@ -16,17 +16,17 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewD
         public var routineTitle: TextView = itemView.findViewById(R.id.routine_title)
         public var routineDescription: TextView = itemView.findViewById(R.id.routine_description)
         public var startBtn: Button = itemView.findViewById(R.id.btn_start)
-        private var menuBtn: ImageButton = itemView.findViewById(R.id.btn_menu)
+        var menuBtn: ImageButton = itemView.findViewById(R.id.btn_menu)
 
 
-        private val bottomSheetFragment = BottomSheetFragment(itemView.context)
-
-        init {
-            menuBtn.setOnClickListener {
-                val fManager = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
-                bottomSheetFragment.show(fManager, bottomSheetFragment.tag)
-            }
-        }
+//        private val bottomSheetFragment = BottomSheetFragment(itemView.context)
+//
+//        init {
+//            menuBtn.setOnClickListener {
+//                val fManager = (itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+//                bottomSheetFragment.show(fManager, bottomSheetFragment.tag)
+//            }
+//        }
 
 
     }
@@ -42,6 +42,14 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewD
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.routineTitle.text = routineList[position].routineTitle
         holder.routineDescription.text = routineList[position].routineDescription
+
+        holder.menuBtn.setOnClickListener {
+            val bottomSheetFragment = BottomSheetFragment(holder.itemView.context)
+            val fManager = (holder.itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            bottomSheetFragment.show(fManager, bottomSheetFragment.tag)
+
+            GetRoutineItemPosition.routinePos = holder.bindingAdapterPosition
+        }
     }
 
     override fun getItemCount(): Int {

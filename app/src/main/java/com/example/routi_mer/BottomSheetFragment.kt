@@ -3,19 +3,24 @@ package com.example.routi_mer
 import android.content.Context
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 
 
 class BottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
 
     private val mContext: Context = context
+
+    lateinit var sendRoutinePositionListener: SendRoutineListPositionListener
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        sendRoutinePositionListener = context as SendRoutineListPositionListener
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +43,17 @@ class BottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
         }
 
         btnDelete.setOnClickListener {
-            Toast.makeText(mContext, "삭제", Toast.LENGTH_SHORT).show()
+            // recyclerview 삭제를 위해 메인 액티비티에 삭제를 원하는 뷰의 포지션 전달
+            sendRoutinePositionListener.sendRoutinePos(GetRoutineItemPosition.routinePos)
+
+            val routineDB = RoutineDB.getRoutineList(mContext)
+            if (routineDB != null) {
+                val allRoutine = routineDB.RoutineListDao().selectAllRoutine()
+
+                routineDB.RoutineListDao().deleteRoutine(allRoutine[GetRoutineItemPosition.routinePos])
+
+            }
+
             dismiss()
         }
 

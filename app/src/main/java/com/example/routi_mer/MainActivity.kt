@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.routi_mer.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -39,10 +39,10 @@ class MainActivity : AppCompatActivity() {
 
         setRoutineRecyclerview()
         // 루틴 리스트 더미데이터 추가
-        routineList.apply {
-            add(RoutineRecyclerViewData("거북목 스트레칭", "개쩌는 효과!"))
-            add(RoutineRecyclerViewData("너무 덥다", "에어컨 각"))
-        }
+//        routineList.apply {
+//            add(RoutineRecyclerViewData("거북목 스트레칭", "개쩌는 효과!"))
+//            add(RoutineRecyclerViewData("너무 덥다", "에어컨 각"))
+//        }
 
         val routineDB = RoutineDB.getRoutineList(this)
         if (routineDB != null) {
@@ -134,7 +134,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun sendRoutinePos(routinePos: Int) {
+        val routineRView: RecyclerView = findViewById(R.id.routine_list)
+        viewManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        viewAdapter = RoutineListAdapter(routineList)
+        recyclerView = routineRView.apply {
+            setHasFixedSize(true)
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
 
+        routineList.removeAt(routinePos)
+        viewAdapter.notifyItemRemoved(routinePos)
+        viewAdapter.notifyItemChanged(routinePos)
+    }
 
 
 //    override fun onCreateOptionsMenu(menu: Menu?): Boolean {

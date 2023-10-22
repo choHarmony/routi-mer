@@ -12,7 +12,7 @@ interface RoutineListDao {
     fun insertRoutine(routineList: RoutineRoomData)
 
     @Delete
-    fun deleteRoutine(routineList: List<RoutineRoomData>)
+    fun deleteRoutine(routineList: RoutineRoomData)
 
     @Query("SELECT * FROM RoutineRoomData")
     fun selectAllRoutine(): List<RoutineRoomData>

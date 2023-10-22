@@ -159,15 +159,15 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
         }
         itemTouchHelper.attachToRecyclerView(rView)
 
-        timerList[getItemPosition.pos].timerTitle = t
-        timerList[getItemPosition.pos].timerDescription = d
-        timerList[getItemPosition.pos].timerSec = sec
-        timerList[getItemPosition.pos].timerSet = set
-        timerList[getItemPosition.pos].oneSetMusicTitle = one
-        timerList[getItemPosition.pos].fullSetMusicTitle = full
+        timerList[GetTimerItemPosition.pos].timerTitle = t
+        timerList[GetTimerItemPosition.pos].timerDescription = d
+        timerList[GetTimerItemPosition.pos].timerSec = sec
+        timerList[GetTimerItemPosition.pos].timerSet = set
+        timerList[GetTimerItemPosition.pos].oneSetMusicTitle = one
+        timerList[GetTimerItemPosition.pos].fullSetMusicTitle = full
 
 
-        viewAdapter.notifyItemChanged(getItemPosition.pos)
+        viewAdapter.notifyItemChanged(GetTimerItemPosition.pos)
 
     }
 
