@@ -13,7 +13,7 @@ class ItemTouchCallback(private val listener: ItemTouchHelperListener): ItemTouc
 
         val swipeFlags = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
 
-        return makeMovementFlags(dragFlags, swipeFlags)
+        return makeMovementFlags(dragFlags, dragFlags)
     }
 
     override fun onMove(
