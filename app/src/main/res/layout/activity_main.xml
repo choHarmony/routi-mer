@@ -42,31 +42,31 @@
     </androidx.appcompat.widget.Toolbar>
 
 
-    <Spinner
-        android:id="@+id/spinner_groupSelect"
-        android:background="@drawable/spinner_bg"
-        android:popupBackground="@drawable/spinner_dropdown_bg"
-        android:dropDownVerticalOffset="45dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:paddingStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/btn_group_manage"
-        app:layout_constraintBottom_toBottomOf="@id/btn_group_manage"/>
+<!--    <Spinner-->
+<!--        android:id="@+id/spinner_groupSelect"-->
+<!--        android:background="@drawable/spinner_bg"-->
+<!--        android:popupBackground="@drawable/spinner_dropdown_bg"-->
+<!--        android:dropDownVerticalOffset="45dp"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="10dp"-->
+<!--        android:paddingStart="10dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="@id/btn_group_manage"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/btn_group_manage"/>-->
 
-    <Button
-        android:id="@+id/btn_group_manage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="그룹 관리"
-        android:fontFamily="@font/nanumsquare_bold"
-        android:textColor="@color/white"
-        android:background="@drawable/btn_dialog_round"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+<!--    <Button-->
+<!--        android:id="@+id/btn_group_manage"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="그룹 관리"-->
+<!--        android:fontFamily="@font/nanumsquare_bold"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:background="@drawable/btn_dialog_round"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar" />-->
 
 
 
@@ -76,7 +76,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@+id/btn_group_manage"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

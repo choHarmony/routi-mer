@@ -5,5 +5,6 @@ open class GetEditedTitleDes {
         var isRoutineChanged: Boolean = false
         var editedTitle: String = ""
         var editedDes: String = ""
+        var editedGroup: String = ""
     }
 }

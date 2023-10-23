@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
         setContentView(binding.root)
 
         setToolbar() // toolbar 설정, title 지우기
-        setSpinner() // spinner adapter, selected 요소 관리
+        //setSpinner() // spinner adapter, selected 요소 관리
         binding.btnSettings.setOnClickListener {
             Toast.makeText(this, "setting btn is clicked", Toast.LENGTH_SHORT).show()
         }
@@ -46,8 +46,9 @@ class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
 //        }
 
         val routineDB = RoutineDB.getRoutineList(this)
+        val allRoutine = routineDB!!.RoutineListDao().selectAllRoutine()
         if (routineDB != null) {
-            val allRoutine = routineDB.RoutineListDao().selectAllRoutine()
+            //val allRoutine = routineDB.RoutineListDao().selectAllRoutine()
 
             for (i in allRoutine.indices) {
                 routineList.add(RoutineRecyclerViewData(allRoutine[i].mainTitle, allRoutine[i].mainDes))
@@ -67,15 +68,15 @@ class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
 
         }
 
-        binding.btnGroupManage.setOnClickListener {
-            // bottomsheetfragment에서 roomdb에 새 그룹 추가해주고
-            // 위에 grouplist에는 roomdb에 있는 그룹명을 add해주어 fragment 지웠다 다시 호출해도
-            // 그룹명이 유지될 수 있도록 해주기
-            val adapter = GroupListAdapter()
-            val bottomDialogFragment = AddGroupBottomSheetFragment(adapter)
-            adapter.setItem(groupList)
-            bottomDialogFragment.show(supportFragmentManager, "TAG")
-        }
+//        binding.btnGroupManage.setOnClickListener {
+//            // bottomsheetfragment에서 roomdb에 새 그룹 추가해주고
+//            // 위에 grouplist에는 roomdb에 있는 그룹명을 add해주어 fragment 지웠다 다시 호출해도
+//            // 그룹명이 유지될 수 있도록 해주기
+//            val adapter = GroupListAdapter()
+//            val bottomDialogFragment = AddGroupBottomSheetFragment(adapter)
+//            adapter.setItem(groupList)
+//            bottomDialogFragment.show(supportFragmentManager, "TAG")
+//        }
 
         // 루틴 추가하고 다시 돌아왔을 때 recyclerview 갱신하기
         activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -97,6 +98,7 @@ class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
         if (GetEditedTitleDes.isRoutineChanged) {
             routineList[GetRoutineItemPosition.routinePos].routineTitle = GetEditedTitleDes.editedTitle
             routineList[GetRoutineItemPosition.routinePos].routineDescription = GetEditedTitleDes.editedDes
+            routineList[GetRoutineItemPosition.routinePos].routineGroup = GetEditedTitleDes.editedGroup
             viewAdapter.notifyItemChanged(GetRoutineItemPosition.routinePos)
             GetEditedTitleDes.isRoutineChanged = false
         }
@@ -116,24 +118,26 @@ class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
     }
 
 
-    private fun setSpinner() {
-        // spinner
-        var spinnerGroupData = resources.getStringArray(R.array.routine_group)
-        var spinnerAdapter = ArrayAdapter<String>(this, R.layout.spinner_open, spinnerGroupData)
-        binding.spinnerGroupSelect.adapter = spinnerAdapter
-
-        binding.spinnerGroupSelect.setSelection(0)
-        binding.spinnerGroupSelect.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                //Toast.makeText(this@MainActivity, "${spinnerGroupData[binding.spinnerGroupSelect.selectedItemPosition]} selected", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
-
-        }
-    }
+//    private fun setSpinner() {
+//        // spinner
+//        var spinnerGroupData = resources.getStringArray(R.array.routine_group)
+//        var spinnerAdapter = ArrayAdapter<String>(this, R.layout.spinner_open, spinnerGroupData)
+//        binding.spinnerGroupSelect.adapter = spinnerAdapter
+//
+//        binding.spinnerGroupSelect.setSelection(0)
+//        binding.spinnerGroupSelect.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+//            var selectedGroup = spinnerGroupData[binding.spinnerGroupSelect.selectedItemPosition]
+//
+//            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//
+//            }
+//
+//            override fun onNothingSelected(p0: AdapterView<*>?) {
+//
+//            }
+//
+//        }
+//    }
 
 
     private fun setRoutineRecyclerview() {

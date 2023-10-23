@@ -79,6 +79,7 @@ class EditRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPosit
 
             GetEditedTitleDes.editedTitle = binding.editTextRoutineTitle.text.toString()
             GetEditedTitleDes.editedDes = binding.editRoutineDes.text.toString()
+            GetEditedTitleDes.editedGroup = binding.editRoutineGroup.text.toString()
             GetEditedTitleDes.isRoutineChanged = true
 
             finish()

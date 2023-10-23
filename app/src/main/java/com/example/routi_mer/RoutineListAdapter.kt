@@ -1,12 +1,17 @@
 package com.example.routi_mer
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 
 class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewData>) :
@@ -15,8 +20,10 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewD
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         public var routineTitle: TextView = itemView.findViewById(R.id.routine_title)
         public var routineDescription: TextView = itemView.findViewById(R.id.routine_description)
+        var routineGroup: TextView = itemView.findViewById(R.id.routine_group)
         public var startBtn: Button = itemView.findViewById(R.id.btn_start)
         var menuBtn: ImageButton = itemView.findViewById(R.id.btn_menu)
+        var groupingBtn: Button = itemView.findViewById(R.id.btn_grouping)
 
 
 //        private val bottomSheetFragment = BottomSheetFragment(itemView.context)
@@ -42,6 +49,7 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewD
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.routineTitle.text = routineList[position].routineTitle
         holder.routineDescription.text = routineList[position].routineDescription
+        holder.routineGroup.text = routineList[position].routineGroup
 
         holder.menuBtn.setOnClickListener {
             val bottomSheetFragment = BottomSheetFragment(holder.itemView.context)
@@ -50,10 +58,12 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewD
 
             GetRoutineItemPosition.routinePos = holder.bindingAdapterPosition
         }
+
     }
 
     override fun getItemCount(): Int {
         return routineList.size
     }
+
 
 }

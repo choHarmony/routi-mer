@@ -48,28 +48,28 @@ class EditRoutineTitleDialog(private val context: AppCompatActivity) {
             binding.editDes.setText(des)
         }
 
-        var checkedIdx = 0
-        binding.btnGroup.setOnClickListener {
-            val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
-            builder.setTitle("그룹 선택")
-            builder.setCancelable(false)
-            builder.setIcon(R.drawable.icon_group_size_edit)
-            val groupList = context.resources.getStringArray(R.array.routine_group)
-
-            builder.setSingleChoiceItems(groupList, checkedIdx) { dialog, which ->
-                checkedIdx = which
-            }
-
-            builder.setPositiveButton("확인") { dialog, which ->
-                binding.btnGroup.text = groupList[checkedIdx]
-            }
-
-            builder.setNegativeButton("취소") { dialog, which ->
-
-            }
-
-            builder.show()
-        }
+//        var checkedIdx = 0
+//        binding.btnGroup.setOnClickListener {
+//            val builder = AlertDialog.Builder(context, R.style.CustomDialogTheme)
+//            builder.setTitle("그룹 선택")
+//            builder.setCancelable(false)
+//            builder.setIcon(R.drawable.icon_group_size_edit)
+//            val groupList = context.resources.getStringArray(R.array.routine_group)
+//
+//            builder.setSingleChoiceItems(groupList, checkedIdx) { dialog, which ->
+//                checkedIdx = which
+//            }
+//
+//            builder.setPositiveButton("확인") { dialog, which ->
+//                binding.btnGroup.text = groupList[checkedIdx]
+//            }
+//
+//            builder.setNegativeButton("취소") { dialog, which ->
+//
+//            }
+//
+//            builder.show()
+//        }
 
 
         binding.btnEditComplete.setOnClickListener {
@@ -77,7 +77,8 @@ class EditRoutineTitleDialog(private val context: AppCompatActivity) {
                 Toast.makeText(context, "루틴 이름은 필수 입력사항입니다.", Toast.LENGTH_SHORT).show()
             }
             else {
-                onClickListener.onClicked(binding.editTitle.text.toString(), binding.editDes.text.toString(), binding.btnGroup.text.toString())
+                onClickListener.onClicked(binding.editTitle.text.toString(), binding.editDes.text.toString(), "")
+                // for group: binding.btnGroup.text.toString()
                 dlg.dismiss()
             }
         }
