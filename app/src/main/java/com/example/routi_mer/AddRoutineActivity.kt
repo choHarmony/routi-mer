@@ -44,9 +44,9 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
         }
 
         setTimerRecyclerview()
-        timerList.apply {
-            add(TimerListData("목 옆으로 당기기", "목을 옆으로 당기면 된다", "20", "3", "", ""))
-        }
+//        timerList.apply {
+//            add(TimerListData("목 옆으로 당기기", "목을 옆으로 당기면 된다", "20", "3", "", ""))
+//        }
 
         binding.addTimer.setOnClickListener {
             addTimerBTSFragment.show(supportFragmentManager, addTimerBTSFragment.tag)

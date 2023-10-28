@@ -1,6 +1,7 @@
 package com.example.routi_mer
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +58,13 @@ class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewD
             bottomSheetFragment.show(fManager, bottomSheetFragment.tag)
 
             GetRoutineItemPosition.routinePos = holder.bindingAdapterPosition
+        }
+
+        holder.startBtn.setOnClickListener {
+            val intent = Intent(holder.itemView.context, TimerActivity::class.java)
+
+            GetRoutineItemPosition.routinePos = holder.bindingAdapterPosition
+            holder.itemView.context.startActivity(intent)
         }
 
     }
