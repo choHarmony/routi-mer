@@ -2,14 +2,14 @@ package com.example.routi_mer
 
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
 import com.example.routi_mer.databinding.ActivityTimerBinding
-import java.text.DecimalFormat
+import java.util.*
 
 class TimerActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityTimerBinding
-
+    private var timerTask: Timer? = null
+    var everStarted = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,52 +21,69 @@ class TimerActivity() : AppCompatActivity() {
             finish()
         }
 
+        binding.btnTimerPause.setOnClickListener {
+            if (binding.btnTimerPause.text == "중지") {
+                binding.btnTimerPause.text = "시작"
+                // 타이머 일시정지
+            } else if (binding.btnTimerPause.text == "시작" && !everStarted) { // 타이머 최초 시작
+                everStarted = true
+                binding.btnTimerPause.text = "중지"
+                runTimer()
+            }
+            else if (binding.btnTimerPause.text == "시작" && everStarted) { // 타이머 resume
+                binding.btnTimerPause.text = "중지"
+                timerTask?.cancel()
+            }
 
+
+        }
+
+
+
+
+
+
+
+
+
+        }
+
+    private fun runTimer() {
         val routineDatabase = RoutineDB.getRoutineList(this)
         val clickedPos = GetRoutineItemPosition.routinePos
-        if (routineDatabase != null) {
-            val allRoutine = routineDatabase.RoutineListDao().selectAllRoutine()
-            binding.timerRoutineTitle.text = allRoutine[clickedPos].mainTitle
+        val allRoutine = routineDatabase!!.RoutineListDao().selectAllRoutine()
+        binding.timerRoutineTitle.text = allRoutine[clickedPos].mainTitle
+        val timerInRoutine = allRoutine[clickedPos].routineTimer
 
-            val timerInRoutine = allRoutine[clickedPos].routineTimer
-            Thread {
-                for (i in 0 until timerInRoutine.size) {
-                    val set = timerInRoutine[i].timerSet.toInt()
-                    val second = timerInRoutine[i].timerSec.toInt()
-                    val handler = Handler(Looper.getMainLooper())
-                    handler.post {
-                        binding.timerTimerTitle.text = timerInRoutine[i].timerTitle
-                        binding.timerTimerDes.text = timerInRoutine[i].timerDescription
-                    }
-
-                    for (st in 1 until set+1) {
-                        handler.post {
-                            binding.timerSetNum.text = "$st/$set 세트"
-                        }
-
-                        for (j in second downTo 0) {
-                            val min = "%02d".format(j / 60)
-                            val sec = "%02d".format(j % 60)
-                            handler.post {
-                                binding.timerTime.text = "$min:$sec"
-                            }
-                            Thread.sleep(1000)
-                        }
-                    }
-
-
+        timerTask = kotlin.concurrent.timer(period = 1000) {
+            for (i in 0 until timerInRoutine.size) {
+                val set = timerInRoutine[i].timerSet.toInt()
+                val second = timerInRoutine[i].timerSec.toInt()
+                runOnUiThread {
+                    binding.timerTimerTitle.text = timerInRoutine[i].timerTitle
+                    binding.timerTimerDes.text = timerInRoutine[i].timerDescription
                 }
-            }.start()
+
+                for (st in 1 until set+1) {
+                    runOnUiThread {
+                        binding.timerSetNum.text = "$st/$set 세트"
+                    }
+
+                    for (j in second downTo 0) {
+                        val min = "%02d".format(j / 60)
+                        val sec = "%02d".format(j % 60)
+                        runOnUiThread {
+                            binding.timerTime.text = "$min:$sec"
+                        }
+                        Thread.sleep(1000)
+                    }
+                }
 
 
+            }
         }
-
-
-
-
-
-        }
-
-
-
     }
+
+
+
+}

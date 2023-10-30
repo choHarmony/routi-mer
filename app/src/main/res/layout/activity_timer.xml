@@ -101,9 +101,10 @@
         app:layout_constraintTop_toBottomOf="@id/timer_timer_title" />
 
     <Button
+        android:id="@+id/btn_timer_pause"
         android:layout_width="120dp"
         android:layout_height="60dp"
-        android:text="중지"
+        android:text="시작"
         android:background="@drawable/btn_start_round"
         android:textSize="28sp"
         android:fontFamily="@font/nanumsquare_bold"
