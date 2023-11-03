@@ -13,7 +13,7 @@ class TimerActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityTimerBinding
     private lateinit var ringtone: Ringtone
-    var isClicked = false
+    var isClicked = false // 타이머 화면을 중도에 닫더라도 스레드가 동작하여 cursor을 사용하는 것을 방지
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +37,7 @@ class TimerActivity() : AppCompatActivity() {
 
 
         binding.btnExitTimer.setOnClickListener {
+            isClicked = true
             finish()
         }
 
@@ -79,6 +80,7 @@ class TimerActivity() : AppCompatActivity() {
                     binding.timerTimerDes.text = timerInRoutine[i].timerDescription
                 }
 
+
                 for (st in 1 until set+1) {
                     runOnUiThread {
                         binding.timerSetNum.text = "$st/$set 세트"
@@ -95,22 +97,20 @@ class TimerActivity() : AppCompatActivity() {
 
                         Thread.sleep(1000)
                     }
-                    if (st < set) {
+
+
+                    if (st < set && !isClicked) {
                         ringtone = rtManager.getRingtone(musicList.indexOf(timerInRoutine[i].oneSetMusicTitle))
                         ringtone.play()
-                        binding.btnExitTimer.setOnClickListener {
-                            ringtone.stop()
-                            finish()
-                        }
                     }
 
                 }
-                ringtone = rtManager.getRingtone(musicList.indexOf(timerInRoutine[i].fullSetMusicTitle))
-                ringtone.play()
-                binding.btnExitTimer.setOnClickListener {
-                    ringtone.stop()
-                    finish()
+
+                if (!isClicked) {
+                    ringtone = rtManager.getRingtone(musicList.indexOf(timerInRoutine[i].fullSetMusicTitle))
+                    ringtone.play()
                 }
+
 
 
             }
