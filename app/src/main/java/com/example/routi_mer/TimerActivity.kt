@@ -1,5 +1,7 @@
 package com.example.routi_mer
 
+import android.media.Ringtone
+import android.media.RingtoneManager
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.routi_mer.databinding.ActivityTimerBinding
@@ -8,6 +10,7 @@ import java.util.*
 class TimerActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityTimerBinding
+    private lateinit var ringtone: Ringtone
     var isClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,6 +35,7 @@ class TimerActivity() : AppCompatActivity() {
 
 
         binding.btnExitTimer.setOnClickListener {
+            ringtone.stop()
             finish()
         }
 
@@ -53,6 +57,15 @@ class TimerActivity() : AppCompatActivity() {
         val allRoutine = routineDatabase!!.RoutineListDao().selectAllRoutine()
         binding.timerRoutineTitle.text = allRoutine[clickedPos].mainTitle
         val timerInRoutine = allRoutine[clickedPos].routineTimer
+
+        val musicList = this.resources.getStringArray(R.array.music_array).toMutableList()
+        val rtManager = RingtoneManager(this)
+        rtManager.setType(RingtoneManager.TYPE_NOTIFICATION)
+        rtManager.cursor.run {
+            while (moveToNext()) {
+                musicList.add(getString(RingtoneManager.TITLE_COLUMN_INDEX))
+            }
+        }
 
         Thread() {
             for (i in 0 until timerInRoutine.size) {
@@ -79,12 +92,20 @@ class TimerActivity() : AppCompatActivity() {
 
                         Thread.sleep(1000)
                     }
+                    if (st < set) {
+                        ringtone = rtManager.getRingtone(musicList.indexOf(timerInRoutine[i].oneSetMusicTitle))
+                        ringtone.play()
+                    }
+
                 }
+                ringtone = rtManager.getRingtone(musicList.indexOf(timerInRoutine[i].fullSetMusicTitle))
+                ringtone.play()
 
 
             }
             binding.btnTimerPause.text = "다시 시작"
             binding.btnTimerPause.isClickable = true
+
         }.start()
 
 
