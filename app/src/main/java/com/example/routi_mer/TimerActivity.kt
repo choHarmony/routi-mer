@@ -8,13 +8,27 @@ import java.util.*
 class TimerActivity() : AppCompatActivity() {
 
     private lateinit var binding: ActivityTimerBinding
-    private var timerTask: Timer? = null
-    var everStarted = false
+    var isClicked = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTimerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val routineDatabase = RoutineDB.getRoutineList(this)
+        val clickedPos = GetRoutineItemPosition.routinePos
+        val allRoutine = routineDatabase!!.RoutineListDao().selectAllRoutine()
+        val timerInRoutine = allRoutine[clickedPos].routineTimer
+        val set = timerInRoutine[0].timerSet.toInt()
+        val second = timerInRoutine[0].timerSec.toInt()
+        val min = "%02d".format(second / 60)
+        val sec = "%02d".format(second % 60)
+
+        binding.timerRoutineTitle.text = allRoutine[clickedPos].mainTitle
+        binding.timerTimerTitle.text = timerInRoutine[0].timerTitle
+        binding.timerTimerDes.text = timerInRoutine[0].timerDescription
+        binding.timerSetNum.text = "1/$set 세트"
+        binding.timerTime.text = "$min:$sec"
 
 
         binding.btnExitTimer.setOnClickListener {
@@ -22,25 +36,10 @@ class TimerActivity() : AppCompatActivity() {
         }
 
         binding.btnTimerPause.setOnClickListener {
-            if (binding.btnTimerPause.text == "중지") {
-                binding.btnTimerPause.text = "시작"
-                // 타이머 일시정지
-            } else if (binding.btnTimerPause.text == "시작" && !everStarted) { // 타이머 최초 시작
-                everStarted = true
-                binding.btnTimerPause.text = "중지"
-                runTimer()
-            }
-            else if (binding.btnTimerPause.text == "시작" && everStarted) { // 타이머 resume
-                binding.btnTimerPause.text = "중지"
-                timerTask?.cancel()
-            }
-
-
+            runTimer()
+            binding.btnTimerPause.text = "진행 중"
+            binding.btnTimerPause.isClickable = false
         }
-
-
-
-
 
 
 
@@ -55,7 +54,7 @@ class TimerActivity() : AppCompatActivity() {
         binding.timerRoutineTitle.text = allRoutine[clickedPos].mainTitle
         val timerInRoutine = allRoutine[clickedPos].routineTimer
 
-        timerTask = kotlin.concurrent.timer(period = 1000) {
+        Thread() {
             for (i in 0 until timerInRoutine.size) {
                 val set = timerInRoutine[i].timerSet.toInt()
                 val second = timerInRoutine[i].timerSec.toInt()
@@ -73,17 +72,23 @@ class TimerActivity() : AppCompatActivity() {
                         val min = "%02d".format(j / 60)
                         val sec = "%02d".format(j % 60)
                         runOnUiThread {
+                            binding.timerProgress.max = second
                             binding.timerTime.text = "$min:$sec"
+                            binding.timerProgress.progress = second-j
                         }
+
                         Thread.sleep(1000)
                     }
                 }
 
 
             }
-        }
-    }
+            binding.btnTimerPause.text = "다시 시작"
+            binding.btnTimerPause.isClickable = true
+        }.start()
 
+
+    }
 
 
 }
