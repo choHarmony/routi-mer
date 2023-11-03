@@ -1,7 +1,6 @@
-package com.example.routi_mer
+package com.example.routi_mer.main
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,8 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
+import com.example.routi_mer.R
+import com.example.routi_mer.edit.EditGroupNameDialog
 
 class GroupListAdapter(var groupList: MutableList<GroupListData> = ArrayList()) :
     RecyclerView.Adapter<GroupListAdapter.Holder>() {

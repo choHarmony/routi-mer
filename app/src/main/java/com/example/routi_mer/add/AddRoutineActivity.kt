@@ -1,4 +1,4 @@
-package com.example.routi_mer
+package com.example.routi_mer.add
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,12 +6,19 @@ import android.os.Bundle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.routi_mer.*
 import com.example.routi_mer.databinding.ActivityAddRoutineBinding
 import com.example.routi_mer.databinding.ActivityMainBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding
+import com.example.routi_mer.edit.EditRoutineTitleDialog
+import com.example.routi_mer.main.MainActivity
+import com.example.routi_mer.room.RoutineDB
+import com.example.routi_mer.room.RoutineRoomData
+import com.example.routi_mer.room.TimerListData
 
 
-class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener, SendEditTimerListener {
+class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener,
+    SendEditTimerListener {
 
     private lateinit var binding: ActivityAddRoutineBinding
     private lateinit var dialogBinding: LayoutDialogSetTimerTitleBinding

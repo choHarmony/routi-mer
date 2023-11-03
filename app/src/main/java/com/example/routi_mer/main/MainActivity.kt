@@ -1,18 +1,17 @@
-package com.example.routi_mer
+package com.example.routi_mer.main
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.routi_mer.*
+import com.example.routi_mer.add.AddRoutineActivity
 import com.example.routi_mer.databinding.ActivityMainBinding
+import com.example.routi_mer.room.RoutineDB
 
 class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
 
@@ -96,9 +95,12 @@ class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
     override fun onResume() {
         super.onResume()
         if (GetEditedTitleDes.isRoutineChanged) {
-            routineList[GetRoutineItemPosition.routinePos].routineTitle = GetEditedTitleDes.editedTitle
-            routineList[GetRoutineItemPosition.routinePos].routineDescription = GetEditedTitleDes.editedDes
-            routineList[GetRoutineItemPosition.routinePos].routineGroup = GetEditedTitleDes.editedGroup
+            routineList[GetRoutineItemPosition.routinePos].routineTitle =
+                GetEditedTitleDes.editedTitle
+            routineList[GetRoutineItemPosition.routinePos].routineDescription =
+                GetEditedTitleDes.editedDes
+            routineList[GetRoutineItemPosition.routinePos].routineGroup =
+                GetEditedTitleDes.editedGroup
             viewAdapter.notifyItemChanged(GetRoutineItemPosition.routinePos)
             GetEditedTitleDes.isRoutineChanged = false
         }

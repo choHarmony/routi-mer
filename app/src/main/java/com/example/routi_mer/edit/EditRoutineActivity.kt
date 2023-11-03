@@ -1,15 +1,22 @@
-package com.example.routi_mer
+package com.example.routi_mer.edit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.routi_mer.*
+import com.example.routi_mer.add.AddTimerBottomSheetFragment
+import com.example.routi_mer.add.ItemTouchCallback
+import com.example.routi_mer.add.TimerListAdapter
 import com.example.routi_mer.databinding.ActivityEditRoutineBinding
 import com.example.routi_mer.databinding.ActivityMainBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding
+import com.example.routi_mer.room.RoutineDB
+import com.example.routi_mer.room.TimerListData
 
-class EditRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener, SendEditTimerListener {
+class EditRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositionToDeleteListener,
+    SendEditTimerListener {
 
     private lateinit var binding: ActivityEditRoutineBinding
     private lateinit var dialogBinding: LayoutDialogSetTimerTitleBinding

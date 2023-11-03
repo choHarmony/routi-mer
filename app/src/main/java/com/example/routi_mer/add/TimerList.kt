@@ -1,4 +1,4 @@
-package com.example.routi_mer
+package com.example.routi_mer.add
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,6 +1,5 @@
-package com.example.routi_mer
+package com.example.routi_mer.add
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import androidx.recyclerview.widget.RecyclerView
@@ -8,9 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.Recycler
+import com.example.routi_mer.main.GroupListAdapter
+import com.example.routi_mer.main.GroupListData
+import com.example.routi_mer.R
 import com.example.routi_mer.databinding.BottomSheetAddGroupLayoutBinding
 
 

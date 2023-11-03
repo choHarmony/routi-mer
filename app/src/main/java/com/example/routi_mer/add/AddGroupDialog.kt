@@ -1,4 +1,4 @@
-package com.example.routi_mer
+package com.example.routi_mer.add
 
 import android.app.Dialog
 import android.content.Context
@@ -8,28 +8,30 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.example.routi_mer.R
 
-class EditGroupNameDialog(context: Context) {
+class AddGroupDialog(context: Context) {
 
     private val dialog = Dialog(context)
 
     fun myDlg() {
-        dialog.setContentView(R.layout.layout_dialog_edit_group_name)
-        dialog.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT,
-        WindowManager.LayoutParams.WRAP_CONTENT)
+        dialog.setContentView(R.layout.layout_dialog_add_group)
+        dialog.window!!.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT)
         dialog.setCancelable(false)
         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val editGroupName = dialog.findViewById<EditText>(R.id.edit_group_name)
-        val btnComplete = dialog.findViewById<Button>(R.id.btn_group_edit_complete)
-        val btnQuit = dialog.findViewById<Button>(R.id.btn_group_edit_quit)
+        val addGroupName = dialog.findViewById<EditText>(R.id.add_group_name)
+        val btnComplete = dialog.findViewById<Button>(R.id.btn_group_add_complete)
+        val btnQuit = dialog.findViewById<Button>(R.id.btn_group_add_quit)
 
         btnComplete.setOnClickListener {
-            if (editGroupName.text.isNullOrEmpty()) {
-                Toast.makeText(dialog.context, "변경할 그룹 이름을 입력해주세요.", Toast.LENGTH_SHORT).show()
+            if (addGroupName.text.isNullOrEmpty()) {
+                Toast.makeText(dialog.context, "추가할 그룹 이름을 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
             else {
-                onClickedListener.onClicked(editGroupName.text.toString())
+                onClickedListener.onClicked(addGroupName.text.toString())
                 dialog.dismiss()
             }
         }
@@ -42,7 +44,7 @@ class EditGroupNameDialog(context: Context) {
     }
 
     interface ButtonClickListener {
-        fun onClicked(editedGroupName: String)
+        fun onClicked(addedGroupName: String)
     }
 
     private lateinit var onClickedListener: ButtonClickListener

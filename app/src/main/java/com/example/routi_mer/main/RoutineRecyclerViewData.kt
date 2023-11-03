@@ -1,4 +1,4 @@
-package com.example.routi_mer
+package com.example.routi_mer.main
 
 data class RoutineRecyclerViewData(
     var routineTitle: String = "",

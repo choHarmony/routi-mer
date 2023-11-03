@@ -1,16 +1,10 @@
-package com.example.routi_mer
+package com.example.routi_mer.edit
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.view.LayoutInflater
-import android.view.View
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.routi_mer.databinding.ActivityAddRoutineBinding
 import com.example.routi_mer.databinding.LayoutDialogSetTimerTitleBinding

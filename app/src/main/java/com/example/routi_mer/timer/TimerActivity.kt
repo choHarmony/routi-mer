@@ -1,11 +1,13 @@
-package com.example.routi_mer
+package com.example.routi_mer.timer
 
 import android.media.Ringtone
 import android.media.RingtoneManager
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.routi_mer.GetRoutineItemPosition
+import com.example.routi_mer.R
 import com.example.routi_mer.databinding.ActivityTimerBinding
-import java.util.*
+import com.example.routi_mer.room.RoutineDB
 
 class TimerActivity() : AppCompatActivity() {
 
@@ -35,15 +37,16 @@ class TimerActivity() : AppCompatActivity() {
 
 
         binding.btnExitTimer.setOnClickListener {
-            ringtone.stop()
             finish()
         }
+
 
         binding.btnTimerPause.setOnClickListener {
             runTimer()
             binding.btnTimerPause.text = "진행 중"
             binding.btnTimerPause.isClickable = false
         }
+
 
 
 
@@ -95,11 +98,19 @@ class TimerActivity() : AppCompatActivity() {
                     if (st < set) {
                         ringtone = rtManager.getRingtone(musicList.indexOf(timerInRoutine[i].oneSetMusicTitle))
                         ringtone.play()
+                        binding.btnExitTimer.setOnClickListener {
+                            ringtone.stop()
+                            finish()
+                        }
                     }
 
                 }
                 ringtone = rtManager.getRingtone(musicList.indexOf(timerInRoutine[i].fullSetMusicTitle))
                 ringtone.play()
+                binding.btnExitTimer.setOnClickListener {
+                    ringtone.stop()
+                    finish()
+                }
 
 
             }

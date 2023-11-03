@@ -1,4 +1,4 @@
-package com.example.routi_mer
+package com.example.routi_mer.room
 
 import android.content.Context
 import androidx.room.Database

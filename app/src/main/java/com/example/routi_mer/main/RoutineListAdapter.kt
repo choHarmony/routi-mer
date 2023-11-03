@@ -1,19 +1,18 @@
-package com.example.routi_mer
+package com.example.routi_mer.main
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.example.routi_mer.GetRoutineItemPosition
+import com.example.routi_mer.R
+import com.example.routi_mer.timer.TimerActivity
+import com.example.routi_mer.edit.BottomSheetFragment
 
 class RoutineListAdapter(private val routineList: ArrayList<RoutineRecyclerViewData>) :
     RecyclerView.Adapter<RoutineListAdapter.ViewHolder>() {
