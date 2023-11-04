@@ -3,6 +3,7 @@ package com.example.routi_mer.add
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -62,23 +63,28 @@ class AddRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPositi
         val routineDB = RoutineDB.getRoutineList(this)
         binding.btnAdd.setOnClickListener {
 
-            routineDB!!.RoutineListDao().insertRoutine(
-                RoutineRoomData(
-                    binding.textRoutineTitle.text.toString(),
-                    binding.routineDes.text.toString(),
-                    binding.routineGroup.text.toString(),
-                    timerList.toMutableList()
+            if (timerList.size == 0) {
+                Toast.makeText(this, "루틴을 저장하기 위해서는 한 개 이상의 타이머가 필요합니다.", Toast.LENGTH_LONG).show()
+            } else {
+
+                routineDB!!.RoutineListDao().insertRoutine(
+                    RoutineRoomData(
+                        binding.textRoutineTitle.text.toString(),
+                        binding.routineDes.text.toString(),
+                        binding.routineGroup.text.toString(),
+                        timerList.toMutableList()
+                    )
                 )
-            )
 
-            val intent = Intent(this, MainActivity::class.java).apply {
-                putExtra("title", binding.textRoutineTitle.text.toString())
-                putExtra("des", binding.routineDes.text.toString())
+                val intent = Intent(this, MainActivity::class.java).apply {
+                    putExtra("title", binding.textRoutineTitle.text.toString())
+                    putExtra("des", binding.routineDes.text.toString())
+                }
+                setResult(RESULT_OK, intent)
+                if (!isFinishing) finish()
+
+
             }
-            setResult(RESULT_OK, intent)
-            if (!isFinishing) finish()
-
-
         }
 
 

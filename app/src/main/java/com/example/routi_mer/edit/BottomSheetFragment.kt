@@ -65,7 +65,7 @@ class BottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
                 builder.setPositiveButton("삭제") { dialog, which ->
                     // recyclerview 삭제를 위해 메인 액티비티에 삭제를 원하는 뷰의 포지션 전달
                     sendRoutinePositionListener.sendRoutinePos(GetRoutineItemPosition.routinePos)
-                    
+
                     routineDB.RoutineListDao().deleteRoutine(allRoutine[GetRoutineItemPosition.routinePos])
                     dismiss()
                 }

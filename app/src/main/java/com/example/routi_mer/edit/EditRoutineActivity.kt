@@ -2,6 +2,7 @@ package com.example.routi_mer.edit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,9 +65,6 @@ class EditRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPosit
             }
 
         }
-//        timerList.apply {
-//            add(TimerListData("목 옆으로 당기기", "목을 옆으로 당기면 된다", "20", "3", "", ""))
-//        }
 
 
 
@@ -77,19 +75,24 @@ class EditRoutineActivity : AppCompatActivity(), SendNewTimerListener, SendPosit
         val routineDB = RoutineDB.getRoutineList(this)
         binding.btnEditRoutineAdd.setOnClickListener {
 
-            val allRoutine = routineDB!!.RoutineListDao().selectAllRoutine()
+            if (timerList.size == 0) {
+                Toast.makeText(this, "루틴을 저장하기 위해서는 한 개 이상의 타이머가 필요합니다.", Toast.LENGTH_LONG).show()
+            } else {
+                val allRoutine = routineDB!!.RoutineListDao().selectAllRoutine()
 
-            routineDB.RoutineListDao().updateTitleByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editTextRoutineTitle.text.toString())
-            routineDB.RoutineListDao().updateDesByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editRoutineDes.text.toString())
-            routineDB.RoutineListDao().updateGroupByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editRoutineGroup.text.toString())
-            routineDB.RoutineListDao().updateTimerDataByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, timerList.toMutableList())
+                routineDB.RoutineListDao().updateTitleByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editTextRoutineTitle.text.toString())
+                routineDB.RoutineListDao().updateDesByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editRoutineDes.text.toString())
+                routineDB.RoutineListDao().updateGroupByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, binding.editRoutineGroup.text.toString())
+                routineDB.RoutineListDao().updateTimerDataByRoutineId(allRoutine[GetRoutineItemPosition.routinePos].mainId, timerList.toMutableList())
 
-            GetEditedTitleDes.editedTitle = binding.editTextRoutineTitle.text.toString()
-            GetEditedTitleDes.editedDes = binding.editRoutineDes.text.toString()
-            GetEditedTitleDes.editedGroup = binding.editRoutineGroup.text.toString()
-            GetEditedTitleDes.isRoutineChanged = true
+                GetEditedTitleDes.editedTitle = binding.editTextRoutineTitle.text.toString()
+                GetEditedTitleDes.editedDes = binding.editRoutineDes.text.toString()
+                GetEditedTitleDes.editedGroup = binding.editRoutineGroup.text.toString()
+                GetEditedTitleDes.isRoutineChanged = true
 
-            finish()
+                finish()
+            }
+
 
 
         }
