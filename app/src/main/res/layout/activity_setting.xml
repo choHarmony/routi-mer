@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".setting.SettingActivity"
+    android:background="@color/white">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/setting_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:id="@+id/setting_logo_korean"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="25sp"
+            android:textColor="@color/green3"
+            android:fontFamily="@font/esamanrulight"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="15dp" />
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <Button
+        android:id="@+id/btn_open_source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="오픈소스 라이선스"
+        android:textColor="#808080"
+        android:textSize="18sp"
+        android:textAlignment="textStart"
+        android:fontFamily="@font/nanumsquare_bold"
+        android:paddingVertical="20dp"
+        android:paddingStart="20dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setting_toolbar" />
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/green2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_open_source" />
+
+    <Button
+        android:id="@+id/btn_font_open_source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="오픈소스 라이선스 (폰트, 아이콘)"
+        android:textColor="#808080"
+        android:textSize="18sp"
+        android:textAlignment="textStart"
+        android:fontFamily="@font/nanumsquare_bold"
+        android:paddingVertical="20dp"
+        android:paddingStart="20dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_line" />
+
+    <View
+        android:id="@+id/view_line2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/green2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_font_open_source" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

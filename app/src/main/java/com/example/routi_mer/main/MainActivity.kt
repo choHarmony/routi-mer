@@ -12,6 +12,7 @@ import com.example.routi_mer.*
 import com.example.routi_mer.add.AddRoutineActivity
 import com.example.routi_mer.databinding.ActivityMainBinding
 import com.example.routi_mer.room.RoutineDB
+import com.example.routi_mer.setting.SettingActivity
 
 class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
 
@@ -34,7 +35,8 @@ class MainActivity : AppCompatActivity(), SendRoutineListPositionListener {
         setToolbar() // toolbar 설정, title 지우기
         //setSpinner() // spinner adapter, selected 요소 관리
         binding.btnSettings.setOnClickListener {
-            Toast.makeText(this, "setting btn is clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SettingActivity::class.java)
+            startActivity(intent)
         }
 
         setRoutineRecyclerview()
