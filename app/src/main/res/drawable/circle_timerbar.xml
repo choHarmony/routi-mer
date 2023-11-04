@@ -3,7 +3,7 @@
 
     <item android:id="@+id/progress_background">
         <shape
-            android:innerRadiusRatio="2.71"
+            android:innerRadiusRatio="2.8"
             android:thicknessRatio="8"
             android:shape="ring"
             android:useLevel="false"
@@ -17,7 +17,7 @@
             android:fromDegrees="270"
             android:toDegrees="270">
             <shape
-                android:innerRadiusRatio="2.71"
+                android:innerRadiusRatio="2.8"
                 android:thicknessRatio="8"
                 android:shape="ring"
                 android:angle="0"
