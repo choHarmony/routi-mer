@@ -59,7 +59,7 @@ class BottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
                 val allRoutine = routineDB.RoutineListDao().selectAllRoutine()
                 val builder = AlertDialog.Builder(mContext)
                 builder.setTitle("삭제 확인")
-                builder.setMessage("삭제한 뒤에는 복구할 수 없습니다.\n 그래도 삭제하시겠습니까?")
+                builder.setMessage("삭제한 뒤에는 복구할 수 없습니다.\n그래도 삭제하시겠습니까?")
                 builder.setCancelable(false)
 
                 builder.setPositiveButton("삭제") { dialog, which ->
