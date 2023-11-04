@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AlertDialog
 import com.example.routi_mer.GetRoutineItemPosition
 import com.example.routi_mer.R
 import com.example.routi_mer.room.RoutineDB
@@ -52,18 +53,31 @@ class BottomSheetFragment(context: Context) : BottomSheetDialogFragment() {
 
 
         btnDelete.setOnClickListener {
-            // recyclerview 삭제를 위해 메인 액티비티에 삭제를 원하는 뷰의 포지션 전달
-            sendRoutinePositionListener.sendRoutinePos(GetRoutineItemPosition.routinePos)
 
             val routineDB = RoutineDB.getRoutineList(mContext)
             if (routineDB != null) {
                 val allRoutine = routineDB.RoutineListDao().selectAllRoutine()
+                val builder = AlertDialog.Builder(mContext)
+                builder.setTitle("삭제 확인")
+                builder.setMessage("삭제한 뒤에는 복구할 수 없습니다.\n 그래도 삭제하시겠습니까?")
+                builder.setCancelable(false)
 
-                routineDB.RoutineListDao().deleteRoutine(allRoutine[GetRoutineItemPosition.routinePos])
+                builder.setPositiveButton("삭제") { dialog, which ->
+                    // recyclerview 삭제를 위해 메인 액티비티에 삭제를 원하는 뷰의 포지션 전달
+                    sendRoutinePositionListener.sendRoutinePos(GetRoutineItemPosition.routinePos)
+                    
+                    routineDB.RoutineListDao().deleteRoutine(allRoutine[GetRoutineItemPosition.routinePos])
+                    dismiss()
+                }
+
+                builder.setNegativeButton("취소") { dialog, which ->
+
+                }
+
+                builder.show()
 
             }
 
-            dismiss()
         }
 
         return view
