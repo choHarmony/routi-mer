@@ -36,4 +36,4 @@
 </br>
 
 ### 🔗 소개 페이지
-⏱ [루티머(Routi-mer) - 내 마음대로 설정하는 타이머 루틴] (https://daisy-taste-d2e.notion.site/Routi-mer-25a594a6571f4f9b91b282a85a7abdf6?pvs=4)
+⏱ [루티머(Routi-mer) - 내 마음대로 설정하는 타이머 루틴](https://daisy-taste-d2e.notion.site/Routi-mer-25a594a6571f4f9b91b282a85a7abdf6?pvs=4)
